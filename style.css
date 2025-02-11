@@ -42,3 +42,7 @@ button:hover {
     padding: 0;
 }
 
+.section {
+    display: none;
+}
+

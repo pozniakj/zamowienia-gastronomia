@@ -10,21 +10,37 @@
     <div class="menu">
         <div class="category" id="burgers">
             <h2>Burgery</h2>
-            <div class="items" id="burger-items">
-                <!-- Produkty z burgerami będą tutaj dodane dynamicznie -->
-            </div>
+            <button onclick="showSection('burgers')">Kliknij, aby zobaczyć Burgery</button>
         </div>
         <div class="category" id="fries">
             <h2>Frytki</h2>
-            <div class="items" id="fries-items">
-                <!-- Produkty z frytkami będą tutaj dodane dynamicznie -->
-            </div>
+            <button onclick="showSection('fries')">Kliknij, aby zobaczyć Frytki</button>
         </div>
         <div class="category" id="sides">
             <h2>Dodatki</h2>
-            <div class="items" id="sides-items">
-                <!-- Produkty z dodatkami będą tutaj dodane dynamicznie -->
-            </div>
+            <button onclick="showSection('sides')">Kliknij, aby zobaczyć Dodatki</button>
+        </div>
+    </div>
+
+    <!-- Sekcje do wyświetlania -->
+    <div id="burgers-section" class="section">
+        <h3>Wybierz Burgery:</h3>
+        <div class="items" id="burger-items">
+            <!-- Produkty burgerów tutaj -->
+        </div>
+    </div>
+
+    <div id="fries-section" class="section">
+        <h3>Wybierz Frytki:</h3>
+        <div class="items" id="fries-items">
+            <!-- Produkty frytek tutaj -->
+        </div>
+    </div>
+
+    <div id="sides-section" class="section">
+        <h3>Wybierz Dodatki:</h3>
+        <div class="items" id="sides-items">
+            <!-- Produkty dodatków tutaj -->
         </div>
     </div>
 
