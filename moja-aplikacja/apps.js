@@ -1,56 +1,73 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu gastronomiczne</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="menu">
-        <div class="category" id="burgers">
-            <h2>Burgery</h2>
-            <button onclick="showSection('burgers')">Kliknij, aby zobaczyć Burgery</button>
-        </div>
-        <div class="category" id="fries">
-            <h2>Frytki</h2>
-            <button onclick="showSection('fries')">Kliknij, aby zobaczyć Frytki</button>
-        </div>
-        <div class="category" id="sides">
-            <h2>Dodatki</h2>
-            <button onclick="showSection('sides')">Kliknij, aby zobaczyć Dodatki</button>
-        </div>
-    </div>
+const burgers = [
+  { name: 'Classic', price: 28 },
+  { name: 'BBQ', price: 32 },
+  { name: 'Oklahoma', price: 28 },
+  { name: 'Chipotle', price: 30 },
+  { name: 'Truffla', price: 30 },
+  { name: 'Piekielny', price: 32 },
+  { name: 'KimCheese', price: 32 },
+  { name: 'Bydlak', price: 35 }
+];
 
-    <!-- Sekcje do wyświetlania -->
-    <div id="burgers-section" class="section" style="display:none;">
-        <h3>Wybierz Burgery:</h3>
-        <div class="items" id="burger-items">
-            <!-- Produkty burgerów będą tutaj generowane -->
-        </div>
-    </div>
+const fries = [
+  { name: 'Małe', price: 7 },
+  { name: 'Duże', price: 10 }
+];
 
-    <div id="fries-section" class="section" style="display:none;">
-        <h3>Wybierz Frytki:</h3>
-        <div class="items" id="fries-items">
-            <!-- Produkty frytek będą tutaj generowane -->
-        </div>
-    </div>
+const sides = [
+  { name: 'Dodatkowe Mięso', price: 12 },
+  { name: 'Składnik 2zł', price: 2 },
+  { name: 'Składnik 4zł', price: 4 }
+];
 
-    <div id="sides-section" class="section" style="display:none;">
-        <h3>Wybierz Dodatki:</h3>
-        <div class="items" id="sides-items">
-            <!-- Produkty dodatków będą tutaj generowane -->
-        </div>
-    </div>
+const order = [];
 
-    <div class="order-summary">
-        <h3>Podsumowanie Zamówienia</h3>
-        <ul id="order-list"></ul>
-        <p id="total-price">Cena całkowita: 0 PLN</p>
-        <button id="save-order">Zapisz zamówienie</button>
-    </div>
+const burgerContainer = document.getElementById('burger-items');
+const friesContainer = document.getElementById('fries-items');
+const sidesContainer = document.getElementById('sides-items');
+const orderList = document.getElementById('order-list');
+const totalPriceElem = document.getElementById('total-price');
 
-    <script src="app.js"></script>
-</body>
-</html>
+// Funkcja do generowania produktów w sekcji
+const createItems = (container, items) => {
+  container.innerHTML = '';  // Czyszczenie kontenera przed dodaniem nowych przycisków
+  items.forEach(item => {
+      const button = document.createElement('button');
+      button.textContent = `${item.name} - ${item.price} PLN +`;
+      button.onclick = () => addToOrder(item);
+      container.appendChild(button);
+  });
+};
+
+// Funkcja do dodawania pozycji do zamówienia
+const addToOrder = (item) => {
+  order.push(item);
+  updateOrderSummary();
+};
+
+// Funkcja do aktualizacji podsumowania zamówienia
+const updateOrderSummary = () => {
+  orderList.innerHTML = '';
+  let totalPrice = 0;
+  order.forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${item.name} - ${item.price} PLN`;
+      orderList.appendChild(listItem);
+      totalPrice += item.price;
+  });
+  totalPriceElem.textContent = `Cena całkowita: ${totalPrice} PLN`;
+};
+
+// Inicjalizacja strony
+if (burgerContainer) {
+  createItems(burgerContainer, burgers);
+} else if (friesContainer) {
+  createItems(friesContainer, fries);
+} else if (sidesContainer) {
+  createItems(sidesContainer, sides);
+}
+
+// Funkcja do zapisywania zamówienia
+document.getElementById('save-order').onclick = () => {
+  alert('Zamówienie zapisane!');
+};

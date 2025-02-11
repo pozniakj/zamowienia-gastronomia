@@ -42,7 +42,16 @@ button:hover {
     padding: 0;
 }
 
-.section {
-    display: none;
+.header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+.back-button {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 16px;
+}
