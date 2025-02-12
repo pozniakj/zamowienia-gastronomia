@@ -4,18 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Główne</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+        .category {
+            background-color: #ffcc00;
+            padding: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        .category:hover {
+            background-color: #ffaa00;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-
-    <h1>Wybierz kategorię</h1>
-
-    <div class="menu-container">
-        <div class="menu-item" onclick="location.href='burgery.html'">Burgery</div>
-        <div class="menu-item" onclick="location.href='frytki.html'">Frytki</div>
-        <div class="menu-item" onclick="location.href='dodatki.html'">Dodatki</div>
-        <div class="menu-item" onclick="location.href='zamowienia.html'">Zamówienia</div>
+    <div class="container">
+        <div class="category" onclick="location.href='burgery.html'">Burgery</div>
+        <div class="category" onclick="location.href='frytki.html'">Frytki</div>
+        <div class="category" onclick="location.href='dodatki.html'">Dodatki</div>
     </div>
-
 </body>
 </html>
