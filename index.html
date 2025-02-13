@@ -4,42 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Główne</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f8f8f8;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            text-align: center;
-        }
-        .category {
-            background-color: #ffcc00;
-            padding: 30px;
-            font-size: 24px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.3s;
-        }
-        .category:hover {
-            background-color: #ffaa00;
-            transform: scale(1.05);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="category" onclick="location.href='burgery.html'">Burgery</div>
-        <div class="category" onclick="location.href='frytki.html'">Frytki</div>
-        <div class="category" onclick="location.href='dodatki.html'">Dodatki</div>
+    <header>
+        <h1>Witaj w Zamówieniach Gastronomicznych</h1>
+    </header>
+
+    <div class="menu-container">
+        <a href="burgery.html" class="category">Burgery</a>
+        <a href="frytki.html" class="category">Frytki</a>
+        <a href="dodatki.html" class="category">Dodatki</a>
     </div>
+
+    <footer>
+        <p>&copy; 2025 Zamówienia Gastronomia</p>
+    </footer>
 </body>
 </html>

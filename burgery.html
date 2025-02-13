@@ -8,59 +8,15 @@
 </head>
 <body>
     <h1>Burgery</h1>
-    <div class="menu-container">
-        <button class="menu-item" onclick="addToOrder('Classic', 28)">Classic - 28 zł</button>
-        <button class="menu-item" onclick="addToOrder('BBQ', 32)">BBQ - 32 zł</button>
-        <button class="menu-item" onclick="addToOrder('Oklahoma', 28)">Oklahoma - 28 zł</button>
-        <button class="menu-item" onclick="addToOrder('Chipotle', 30)">Chipotle - 30 zł</button>
-        <button class="menu-item" onclick="addToOrder('Truffla', 30)">Truffla - 30 zł</button>
-        <button class="menu-item" onclick="addToOrder('Piekielny', 32)">Piekielny - 32 zł</button>
-        <button class="menu-item" onclick="addToOrder('KimCheese', 32)">KimCheese - 32 zł</button>
-        <button class="menu-item" onclick="addToOrder('Bydlak', 35)">Bydlak - 35 zł</button>
-    </div>
-    
+    <div id="burger-items" class="menu-container"></div>
+
     <h2>Twoje zamówienie:</h2>
     <ul id="order-list"></ul>
-    <p id="total-price">Łączna cena: 0 zł</p>
-    <button onclick="saveOrder()">Zapisz zamówienie</button>
+    <p id="total-price">Łączna cena: 0 PLN</p>
+    <button id="save-order">Zapisz zamówienie</button>
     <br>
     <a href="index.html">⬅ Powrót</a>
 
-    <script>
-        let order = [];
-        
-        function addToOrder(name, price) {
-            order.push({ name, price });
-            updateOrderDisplay();
-        }
-        
-        function updateOrderDisplay() {
-            let orderList = document.getElementById("order-list");
-            let totalPrice = document.getElementById("total-price");
-            orderList.innerHTML = "";
-            let sum = 0;
-            order.forEach(item => {
-                let li = document.createElement("li");
-                li.textContent = `${item.name} - ${item.price} zł`;
-                orderList.appendChild(li);
-                sum += item.price;
-            });
-            totalPrice.textContent = `Łączna cena: ${sum} zł`;
-        }
-        
-        function saveOrder() {
-            alert("Zamówienie zapisane!");
-        }
-    </script>
-<div id="zamowienie-box">
-    <h3>Twoje zamówienie:</h3>
-    <div id="zamowienie"></div>
-    <p><strong>Suma:</strong> <span id="suma-cena">0 zł</span></p>
-    <button id="zapisz-zamowienie">Zapisz zamówienie</button>
-</div>
-
-<script src="js/jos.js"></script>
-</body>
-</html>
+    <script src="app.js"></script>
 </body>
 </html>

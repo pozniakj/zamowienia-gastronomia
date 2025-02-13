@@ -31,3 +31,27 @@ h1 {
 .menu-item:hover {
     background-color: #ffaa00;
 }
+
+.category {
+    display: block;
+    padding: 20px;
+    background-color: #ffcc00;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.category:hover {
+    background-color: #ffaa00;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .menu-container {
+        flex-direction: column;
+    }
+}
