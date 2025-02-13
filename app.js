@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    const order = JSON.parse(localStorage.getItem('order')) || [];
+    let order = JSON.parse(localStorage.getItem('order')) || [];
 
     const orderList = document.getElementById('order-list');
     const totalPriceElem = document.getElementById('total-price');
+    const savedOrderContainer = document.getElementById('saved-order');
 
     const createItems = (container, items) => {
         container.innerHTML = '';
@@ -60,6 +61,34 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('order', JSON.stringify(order));
     };
 
+    document.getElementById('save-order')?.addEventListener('click', () => {
+        localStorage.setItem('savedOrder', JSON.stringify(order));
+        alert('Zamówienie zapisane!');
+        showSavedOrder();
+    });
+
+    const showSavedOrder = () => {
+        const savedOrder = JSON.parse(localStorage.getItem('savedOrder'));
+        if (!savedOrder || savedOrder.length === 0) return;
+
+        savedOrderContainer.innerHTML = `<h2>📝 Ostatnie zamówienie</h2>`;
+        const orderBox = document.createElement('div');
+        orderBox.classList.add('saved-order-box');
+
+        let totalPrice = 0;
+        savedOrder.forEach(item => {
+            const itemText = document.createElement('p');
+            itemText.textContent = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN`;
+            orderBox.appendChild(itemText);
+            totalPrice += item.price * item.quantity;
+        });
+
+        const totalText = document.createElement('p');
+        totalText.innerHTML = `<strong>Łączna cena:</strong> ${totalPrice} PLN`;
+        orderBox.appendChild(totalText);
+        savedOrderContainer.appendChild(orderBox);
+    };
+
     if (document.getElementById('burger-items')) {
         createItems(document.getElementById('burger-items'), menu.burgers);
     } else if (document.getElementById('fries-items')) {
@@ -68,9 +97,5 @@ document.addEventListener("DOMContentLoaded", () => {
         createItems(document.getElementById('sides-items'), menu.sides);
     }
 
-    document.getElementById('save-order')?.addEventListener('click', () => {
-        alert('Zamówienie zapisane!');
-    });
-
-    updateOrderSummary();
+    showSavedOrder();
 });
