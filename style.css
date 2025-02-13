@@ -98,6 +98,23 @@ h1 {
     padding: 5px 0;
 }
 
+/* Przycisk usuwania pozycji w zamówieniu */
+.remove-btn {
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
+    background: #ff1a1a;
+}
+
+/* Podsumowanie ceny zamówienia */
 #total-price {
     font-size: 20px;
     font-weight: bold;
@@ -105,7 +122,7 @@ h1 {
 }
 
 /* Przycisk zapisywania zamówienia */
-#save-order {
+#save-order-main {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
@@ -113,11 +130,62 @@ h1 {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-#save-order:hover {
+#save-order-main:hover {
     background-color: #45a049;
+}
+
+/* Blok zapisanych zamówień - wygląd jak kartka papieru */
+#saved-order {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.saved-order-box {
+    background: #fffdfa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: auto;
+    position: relative;
+}
+
+/* Efekt "papierowej kartki" */
+.saved-order-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(white, white 30px, rgba(0, 0, 0, 0.05) 31px);
+    z-index: -1;
+    border-radius: 10px;
+}
+
+.saved-order-box p {
+    font-size: 18px;
+}
+
+/* Animacja pojawiania się zapisanych zamówień */
+.saved-order-box {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Link powrotu */
@@ -139,64 +207,6 @@ footer {
     margin-top: 40px;
     font-size: 14px;
     color: #666;
-}
-
-/* Blok zapisanych zamówień - wygląd jak kartka papieru */
-#saved-order {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
-}
-
-.saved-order-box {
-    background: #fffdfa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
-    display: inline-block;
-    text-align: left;
-    width: auto;
-    max-width: 400px;
-    font-family: 'Courier New', Courier, monospace;
-    position: relative;
-    margin: auto;
-}
-
-/* Efekt "papierowej kartki" */
-.saved-order-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(white, white 30px, rgba(0, 0, 0, 0.05) 31px);
-    z-index: -1;
-    border-radius: 10px;
-}
-
-.saved-order-box p {
-    font-size: 18px;
-    padding: 5px 0;
-}
-
-.saved-order-box strong {
-    font-size: 20px;
-}
-
-/* Animacja pojawiania się */
-.saved-order-box {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Responsywność dla mniejszych ekranów */

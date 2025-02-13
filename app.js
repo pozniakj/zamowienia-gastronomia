@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const orderList = document.getElementById('order-list');
+    const totalPriceElem = document.getElementById('total-price');
+    const savedOrderContainer = document.getElementById('saved-order');
+    let order = JSON.parse(localStorage.getItem('order')) || [];
+
     const menu = {
         burgers: [
             { name: 'Classic', price: 28 },
@@ -21,12 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    let order = JSON.parse(localStorage.getItem('order')) || [];
-
-    const orderList = document.getElementById('order-list');
-    const totalPriceElem = document.getElementById('total-price');
-    const savedOrderContainer = document.getElementById('saved-order');
-
     const createItems = (container, items) => {
         container.innerHTML = '';
         items.forEach(item => {
@@ -48,22 +47,34 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     };
 
+    const removeFromOrder = (index) => {
+        order.splice(index, 1);
+        updateOrderSummary();
+    };
+
     const updateOrderSummary = () => {
         orderList.innerHTML = '';
         let totalPrice = 0;
-        order.forEach(item => {
+
+        order.forEach((item, index) => {
             const listItem = document.createElement('li');
-            listItem.textContent = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN`;
+            listItem.innerHTML = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN 
+                <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
             orderList.appendChild(listItem);
             totalPrice += item.price * item.quantity;
         });
+
         totalPriceElem.textContent = `Cena całkowita: ${totalPrice} PLN`;
         localStorage.setItem('order', JSON.stringify(order));
     };
 
-    document.getElementById('save-order')?.addEventListener('click', () => {
+    document.getElementById('save-order-main')?.addEventListener('click', () => {
         localStorage.setItem('savedOrder', JSON.stringify(order));
         alert('Zamówienie zapisane!');
+
+        order = [];
+        localStorage.setItem('order', JSON.stringify(order));
+        updateOrderSummary();
         showSavedOrder();
     });
 
@@ -98,4 +109,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     showSavedOrder();
+    updateOrderSummary();
 });
