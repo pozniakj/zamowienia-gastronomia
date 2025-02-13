@@ -42,7 +42,6 @@ h1 {
     text-decoration: none;
     color: black;
     transition: transform 0.2s, background-color 0.3s;
-    text-align: center;
 }
 
 .category:hover {
@@ -50,102 +49,19 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Kontenery na menu produktów */
-.menu-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-/* Przyciski menu (burgery, frytki, dodatki) */
-.menu-item {
-    padding: 15px 30px;
-    background-color: #ffcc00;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    min-width: 150px;
-    border: none;
-    outline: none;
-}
-
-.menu-item:hover {
-    background-color: #ffaa00;
-}
-
-/* Stylowanie podsumowania zamówienia */
-.order-summary {
-    margin-top: 30px;
-    padding: 15px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-}
-
-#order-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-#order-list li {
-    font-size: 18px;
-    padding: 5px 0;
-}
-
-/* Przycisk usuwania pozycji w zamówieniu */
-.remove-btn {
-    background: #ff4d4d;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-.remove-btn:hover {
-    background: #ff1a1a;
-}
-
-/* Podsumowanie ceny zamówienia */
-#total-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Przycisk zapisywania zamówienia */
-#save-order-main {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-#save-order-main:hover {
-    background-color: #45a049;
-}
-
-/* Blok zapisanych zamówień - wygląd jak kartka papieru */
-#saved-order {
+/* Sekcja zapisanych zamówień */
+#saved-orders-section {
     margin-top: 40px;
     padding: 20px;
+    background-color: #fdf6e3;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.saved-order-box {
+/* Styl pojedynczego zamówienia */
+.order-card {
     background: #fffdfa;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
@@ -153,53 +69,39 @@ h1 {
     text-align: left;
     max-width: 400px;
     font-family: 'Courier New', Courier, monospace;
-    margin: auto;
     position: relative;
+    margin: 10px;
 }
 
-/* Efekt "papierowej kartki" */
-.saved-order-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.order-card h3 {
+    text-align: center;
+}
+
+.order-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-card ul li {
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+/* Przycisk usuwania zamówienia */
+.remove-order-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
     width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(white, white 30px, rgba(0, 0, 0, 0.05) 31px);
-    z-index: -1;
-    border-radius: 10px;
 }
 
-.saved-order-box p {
-    font-size: 18px;
-}
-
-/* Animacja pojawiania się zapisanych zamówień */
-.saved-order-box {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Link powrotu */
-a {
-    display: inline-block;
-    margin-top: 15px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-a:hover {
-    color: #ff8800;
+.remove-order-btn:hover {
+    background: #ff1a1a;
 }
 
 /* Stopka */
@@ -207,24 +109,4 @@ footer {
     margin-top: 40px;
     font-size: 14px;
     color: #666;
-}
-
-/* Responsywność dla mniejszych ekranów */
-@media (max-width: 768px) {
-    .menu-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .category {
-        width: 80%;
-    }
-
-    .menu-item {
-        width: 80%;
-    }
-
-    .saved-order-box {
-        max-width: 90%;
-    }
 }
