@@ -29,108 +29,81 @@ h1 {
 }
 
 /* Styl dla przycisków menu */
-.menu-item {
-    padding: 12px 20px;
+.category {
+    padding: 15px 30px;
     background-color: #ffcc00;
-    border-radius: 8px;
-    font-size: 18px;
+    border-radius: 10px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    border: none;
-    outline: none;
+    text-decoration: none;
+    color: black;
 }
 
-.menu-item:hover {
+.category:hover {
     background-color: #ffaa00;
+    transform: scale(1.05);
 }
 
-/* Styl dla sekcji zamówienia */
-#order-list {
+/* Sekcja zapisanych zamówień */
+#saved-orders-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fdf6e3;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styl pojedynczego zamówienia */
+.order-card {
+    background: #fffdfa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    margin: 10px;
+}
+
+.order-card h3 {
+    text-align: center;
+}
+
+.order-card ul {
     list-style: none;
     padding: 0;
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-/* Każdy element zamówienia */
-#order-list li {
+.order-card ul li {
     font-size: 18px;
-    padding: 5px;
-    background: #fffdfa;
-    border-radius: 8px;
-    margin: 5px 0;
-    width: 250px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 8px;
+    padding: 5px 0;
 }
 
-/* Przycisk usuwania pozycji */
-.remove-btn {
+/* Przycisk usuwania zamówienia */
+.remove-order-btn {
     background: #ff4d4d;
-    border: none;
     color: white;
-    padding: 5px 10px;
-    margin-left: 10px;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 5px;
+    width: 100%;
 }
 
-.remove-btn:hover {
+.remove-order-btn:hover {
     background: #ff1a1a;
 }
 
-/* Podsumowanie zamówienia */
-#total-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Przycisk zapisywania zamówienia */
-#save-order {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#save-order:hover {
-    background-color: #45a049;
-}
-
-/* Link powrotu */
-a {
-    display: inline-block;
-    margin-top: 15px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-a:hover {
-    color: #ff8800;
-}
-
-/* Responsywność */
-@media (max-width: 768px) {
-    .menu-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #order-list li {
-        width: 90%;
-    }
+/* Stopka */
+footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #666;
 }
