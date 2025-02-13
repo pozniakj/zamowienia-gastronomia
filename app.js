@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const orderList = document.getElementById("order-list");
     const totalPriceElem = document.getElementById("total-price");
+    const saveOrderButton = document.getElementById("save-order");
     let order = JSON.parse(localStorage.getItem("order")) || [];
 
     const menu = {
@@ -67,7 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("order", JSON.stringify(order));
     };
 
-    document.getElementById("save-order")?.addEventListener("click", () => {
+    saveOrderButton?.addEventListener("click", () => {
+        if (order.length === 0) {
+            alert("Nie można zapisać pustego zamówienia!");
+            return;
+        }
+
         localStorage.setItem("savedOrder", JSON.stringify(order));
         alert("Zamówienie zapisane!");
 
