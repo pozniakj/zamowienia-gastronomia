@@ -50,35 +50,6 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Sekcja zapisanych zamówień - Kartka papieru */
-#saved-orders-section {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #fffdfa;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
-    display: inline-block;
-    text-align: left;
-    max-width: 400px;
-    font-family: 'Courier New', Courier, monospace;
-    margin: auto;
-    position: relative;
-}
-
-/* Efekt "papierowej kartki" */
-#saved-orders-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(white, white 30px, rgba(0, 0, 0, 0.05) 31px);
-    z-index: -1;
-    border-radius: 10px;
-}
-
 /* Styl przycisków menu */
 .menu-item {
     padding: 15px 30px;
@@ -96,23 +67,6 @@ h1 {
 
 .menu-item:hover {
     background-color: #ffaa00;
-}
-
-/* Przycisk usuwania zamówienia */
-.remove-order-btn {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    width: 100%;
-}
-
-.remove-order-btn:hover {
-    background: #ff1a1a;
 }
 
 /* Stopka */
