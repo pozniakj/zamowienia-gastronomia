@@ -107,6 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
+        if (savedOrders.length === 0) {
+            savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
+            return;
+        }
+
         savedOrders.forEach((order, index) => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
