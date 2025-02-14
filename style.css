@@ -89,18 +89,22 @@ h1 {
     font-size: 16px;
     border-radius: 5px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
 }
 
 .remove-order-btn:hover {
     background: #ff1a1a;
 }
 
-.remove-order-btn i {
-    font-size: 18px;
+.quantity-btn {
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.quantity-btn:hover {
+    background-color: #ccc;
 }
 
 /* Stopka */
