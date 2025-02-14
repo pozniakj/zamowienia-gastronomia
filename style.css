@@ -50,16 +50,17 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Sekcja zapisanych zamówień */
-#saved-orders-container {
+/* Sekcja zapisanych zamówień - Kartka papieru */
+#saved-orders-section {
     margin-top: 40px;
     padding: 20px;
+    background-color: #fffdfa;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    border-top: 2px solid #ccc;
-    padding-top: 20px;
 }
 
 /* Styl pojedynczego zamówienia */
@@ -88,18 +89,10 @@ h1 {
     font-size: 16px;
     border-radius: 5px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
 }
 
 .remove-order-btn:hover {
     background: #ff1a1a;
-}
-
-.remove-order-btn i {
-    font-size: 18px;
 }
 
 /* Stopka */
