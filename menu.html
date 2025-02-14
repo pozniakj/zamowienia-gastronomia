@@ -9,20 +9,24 @@
 </head>
 <body>
 
-    <!-- MENU BOCZNE -->
+    <!-- MENU BOCZNE (TYLKO ZAMÓWIENIA) -->
     <nav class="sidebar">
         <ul>
             <li onclick="showOrders()">📜 Zamówienia</li>
-            <li onclick="window.location.href='burgery.html'">🍔 Burgery</li>
-            <li onclick="window.location.href='frytki.html'">🍟 Frytki</li>
-            <li onclick="window.location.href='dodatki.html'">🥗 Dodatki</li>
         </ul>
     </nav>
 
     <header>
         <h1>🛒 System POS</h1>
-        <p>Wybierz kategorię z menu po lewej.</p>
+        <p>Wybierz kategorię produktów.</p>
     </header>
+
+    <!-- KATEGORIE NA ŚRODKU STRONY -->
+    <div class="menu-container">
+        <a href="burgery.html" class="category">🍔 Burgery</a>
+        <a href="frytki.html" class="category">🍟 Frytki</a>
+        <a href="dodatki.html" class="category">🥗 Dodatki</a>
+    </div>
 
     <section id="orders-section">
         <h2>📜 Zapisane zamówienia</h2>
