@@ -29,7 +29,8 @@ h1 {
 }
 
 /* Przyciski kategorii */
-.category {
+.category, .menu-item {
+    display: inline-block;
     padding: 15px 30px;
     background-color: #ffcc00;
     border-radius: 10px;
@@ -39,9 +40,12 @@ h1 {
     transition: 0.3s;
     text-decoration: none;
     color: black;
+    border: none;
+    outline: none;
+    text-align: center;
 }
 
-.category:hover {
+.category:hover, .menu-item:hover {
     background-color: #ffaa00;
     transform: scale(1.05);
 }
@@ -93,5 +97,6 @@ footer {
     font-size: 14px;
     color: #666;
 }
+
 
 
