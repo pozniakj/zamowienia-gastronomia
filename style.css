@@ -49,6 +49,34 @@ h1 {
     margin-left: 220px;
 }
 
+/* Menu kategorii na środku strony */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-left: 220px;
+    margin-top: 40px;
+}
+
+.category {
+    padding: 20px 40px;
+    background-color: #ffcc00;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s, background-color 0.3s;
+    text-align: center;
+}
+
+.category:hover {
+    background-color: #ffaa00;
+    transform: scale(1.05);
+}
+
 /* Sekcja zamówień */
 #orders-section {
     margin-left: 220px;
