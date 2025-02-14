@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPriceElem = document.getElementById("total-price");
     const saveOrderButton = document.getElementById("save-order");
     let order = JSON.parse(localStorage.getItem("order")) || [];
-    let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
 
     const menu = {
         burgers: [
@@ -77,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        savedOrders.push(order);
-        localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
+        localStorage.setItem("savedOrder", JSON.stringify(order));
+        alert("Zamówienie zapisane!");
 
         order = [];
         localStorage.setItem("order", JSON.stringify(order));
