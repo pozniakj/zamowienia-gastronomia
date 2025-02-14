@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -27,21 +28,62 @@ h1 {
     margin-bottom: 20px;
 }
 
-.category {
+/* Przyciski menu */
+.menu-item {
     padding: 15px 30px;
     background-color: #ffcc00;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    text-decoration: none;
-    color: black;
+    border: none;
+    outline: none;
 }
 
-.category:hover {
+.menu-item:hover {
     background-color: #ffaa00;
-    transform: scale(1.05);
+}
+
+/* Sekcja zapisanych zamówień */
+#saved-orders-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fdf6e3;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styl pojedynczego zamówienia */
+.order-card {
+    background: #fffdfa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    margin: 10px;
+}
+
+/* Przycisk usuwania zamówienia */
+.remove-order-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.remove-order-btn:hover {
+    background: #ff1a1a;
 }
 
 /* Stopka */
@@ -50,4 +92,3 @@ footer {
     font-size: 14px;
     color: #666;
 }
-
