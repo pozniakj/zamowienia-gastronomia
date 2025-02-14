@@ -1,4 +1,4 @@
-
+/* Resetowanie domyślnych styli */
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +28,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Przyciski menu */
+/* Styl przycisków menu */
 .menu-item {
     padding: 15px 30px;
     background-color: #ffcc00;
@@ -45,7 +45,7 @@ h1 {
     background-color: #ffaa00;
 }
 
-/* Sekcja zapisanych zamówień */
+/* Styl kartki papieru */
 #saved-orders-section {
     margin-top: 40px;
     padding: 20px;
@@ -54,7 +54,7 @@ h1 {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Styl pojedynczego zamówienia */
+/* Styl zamówień */
 .order-card {
     background: #fffdfa;
     padding: 15px;
@@ -92,3 +92,4 @@ footer {
     font-size: 14px;
     color: #666;
 }
+
