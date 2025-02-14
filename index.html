@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Główne</title>
+    <title>System Zamówień - POS</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <h1>Witaj w Zamówieniach Gastronomicznych</h1>
+        <h1>🛒 System Zamówień POS</h1>
     </header>
 
     <div class="menu-container">
-        <a href="burgery.html" class="category">🍔 Burgery</a>
-        <a href="frytki.html" class="category">🍟 Frytki</a>
-        <a href="dodatki.html" class="category">🥗 Dodatki</a>
+        <button onclick="window.location.href='burgery.html'" class="category">🍔 Burgery</button>
+        <button onclick="window.location.href='frytki.html'" class="category">🍟 Frytki</button>
+        <button onclick="window.location.href='dodatki.html'" class="category">🥗 Dodatki</button>
     </div>
 
-    <!-- Kartka papieru na zapisane zamówienia -->
-    <section id="saved-orders-section">
-        <h2>📜 Twoje zapisane zamówienia</h2>
-        <div id="saved-orders-container"></div>
-    </section>
+    <section id="saved-orders-container"></section>
 
     <footer>
-        <p>&copy; 2025 Zamówienia Gastronomia</p>
+        <p>&copy; 2025 System POS Zamówień</p>
     </footer>
 
     <script src="app.js"></script>
