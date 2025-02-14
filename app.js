@@ -33,20 +33,20 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // Funkcja generująca produkty w kategoriach
+    // Tworzenie przycisków produktów
     const createItems = (container, items) => {
         if (!container) return;
         container.innerHTML = "";
         items.forEach(item => {
             const button = document.createElement("button");
-            button.classList.add("menu-item");
-            button.textContent = `${item.name} - ${item.price} PLN +`;
+            button.classList.add("product-button");
+            button.textContent = `${item.name} - ${item.price} PLN`;
             button.onclick = () => addToOrder(item);
             container.appendChild(button);
         });
     };
 
-    // Dodawanie produktów do zamówienia
+    // Dodawanie produktu do zamówienia
     const addToOrder = (item) => {
         const existingItem = order.find(o => o.name === item.name);
         if (existingItem) {
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     };
 
-    // Usuwanie pojedynczego produktu z zamówienia
+    // Usuwanie produktu z zamówienia
     window.removeFromOrder = (index) => {
         order.splice(index, 1);
         updateOrderSummary();
@@ -97,13 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSavedOrders();
     });
 
-    // Wyświetlanie zapisanych zamówień po kliknięciu w menu
+    // Wyświetlanie zapisanych zamówień
     window.showOrders = () => {
         ordersSection.style.display = "block";
         updateSavedOrders();
     };
 
-    // Aktualizacja sekcji zapisanych zamówień
+    // Aktualizacja zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
@@ -153,4 +153,3 @@ document.addEventListener("DOMContentLoaded", () => {
     updateOrderSummary();
     updateSavedOrders();
 });
-
