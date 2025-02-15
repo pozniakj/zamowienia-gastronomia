@@ -41,7 +41,7 @@ body {
     background: #555;
 }
 
-/* Nagłówek menu bocznego */
+/* Styl nagłówka w menu bocznym */
 .menu-title {
     padding: 15px;
     font-size: 18px;
@@ -50,11 +50,12 @@ body {
     border-bottom: 1px solid #444;
 }
 
-/* Usuwanie domyślnych efektów dla napisu */
+/* Usunięcie efektu linku */
 .menu-title:hover {
     background: none;
     cursor: default;
 }
+
 
 /* Nagłówek */
 h1 {
