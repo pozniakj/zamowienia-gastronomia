@@ -41,21 +41,22 @@ body {
     background: #555;
 }
 
-/* Styl nagłówka w menu bocznym */
+/* Nagłówek menu bocznego */
 .menu-title {
     padding: 15px;
     font-size: 18px;
-    color: white;
+    color: white;  /* Biały kolor jak inne elementy w menu */
     text-align: left;
     border-bottom: 1px solid #444;
+    text-decoration: none; /* Usuwa podkreślenie */
+    font-weight: normal; /* Usuwa pogrubienie, jeśli było */
 }
 
-/* Usunięcie efektu linku */
+/* Usunięcie efektu hover */
 .menu-title:hover {
     background: none;
     cursor: default;
 }
-
 
 /* Nagłówek */
 h1 {
