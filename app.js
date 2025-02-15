@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
+    const orderNoteInput = document.getElementById("order-note");
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -33,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // Tworzenie przycisków produktów
     const createItems = (container, items) => {
         if (!container) return;
         container.innerHTML = "";
@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Dodawanie produktu do zamówienia
     const addToOrder = (item) => {
         const existingItem = order.find(o => o.name === item.name);
         if (existingItem) {
@@ -57,13 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     };
 
-    // Usuwanie produktu z zamówienia
     window.removeFromOrder = (index) => {
         order.splice(index, 1);
         updateOrderSummary();
     };
 
-    // Aktualizacja podsumowania zamówienia
     const updateOrderSummary = () => {
         if (!orderList || !totalPriceElem) return;
         orderList.innerHTML = "";
@@ -81,17 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    // Zapisywanie zamówienia i resetowanie
     saveOrderButton?.addEventListener("click", () => {
         if (order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
             return;
         }
 
-        savedOrders.push(order);
+        const orderNote = orderNoteInput ? orderNoteInput.value.trim() : "";
+
+        savedOrders.push({ items: order, note: orderNote });
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
-        // Dodawanie zamówienia do historii z datą
         const today = new Date().toISOString().split("T")[0]; 
         let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
 
@@ -99,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
             historyOrders[today] = [];
         }
 
-        historyOrders[today].push(order);
+        historyOrders[today].push({ items: order, note: orderNote });
         localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
 
         order = [];
@@ -108,13 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSavedOrders();
     });
 
-    // Wyświetlanie zapisanych zamówień
-    window.showOrders = () => {
-        ordersSection.style.display = "block";
-        updateSavedOrders();
-    };
-
-    // Aktualizacja zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
@@ -123,19 +113,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        savedOrders.forEach((order, index) => {
+        savedOrders.forEach((orderData, index) => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
 
             let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
             let totalPrice = 0;
 
-            order.forEach(item => {
+            orderData.items.forEach(item => {
                 orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
 
             orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+            if (orderData.note) {
+                orderContent += `<p><strong>Notatka:</strong> ${orderData.note}</p>`;
+            }
             orderCard.innerHTML = orderContent;
 
             const removeButton = document.createElement("button");
@@ -152,7 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Inicjalizacja produktów w odpowiednich kategoriach
     if (burgerContainer) {
         createItems(burgerContainer, menu.burgers);
     } else if (friesContainer) {
@@ -164,3 +156,4 @@ document.addEventListener("DOMContentLoaded", () => {
     updateOrderSummary();
     updateSavedOrders();
 });
+
