@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POS Menu</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-    <!-- MENU BOCZNE -->
     <nav class="sidebar">
         <ul>
             <li onclick="showOrders()">📜 Zamówienia</li>
             <li class="menu-title" onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
         </ul>
     </nav>
+    
 
     <header>
         <h1>🛒 System POS</h1>
@@ -26,12 +26,11 @@
         <a href="burgery.html" class="menu-item">🍔 Burgery</a>
         <a href="frytki.html" class="menu-item">🍟 Frytki</a>
         <a href="dodatki.html" class="menu-item">🥗 Dodatki</a>
+        <a href="historia.html" class="menu-item">📅 Przeglądaj historię</a>
     </div>
 
     <section id="orders-section">
         <h2>📜 Zapisane zamówienia</h2>
-        <textarea id="order-note" placeholder="Dodaj notatkę do zamówienia..." rows="2"></textarea>
-        <button id="save-order">Zapisz zamówienie</button>
         <div id="saved-orders-container"></div>
     </section>
 

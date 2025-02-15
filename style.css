@@ -41,6 +41,22 @@ body {
     background: #555;
 }
 
+/* Nagłówek menu bocznego */
+/* Styl nagłówka w menu bocznym */
+.menu-title {
+    padding: 15px;
+    font-size: 18px;
+    color: white;
+    text-align: left;
+    border-bottom: 1px solid #444;
+    cursor: pointer; /* Pozwala na kliknięcie */
+}
+
+/* Efekt kliknięcia jak w przyciskach menu */
+.menu-title:hover {
+    background: #444;
+}
+
 /* Nagłówek */
 h1 {
     font-size: 28px;
@@ -61,19 +77,19 @@ h1 {
 
 .category {
     padding: 20px 40px;
-    background-color: #4CAF50;
+    background-color: #ffcc00;
     font-size: 24px;
     font-weight: bold;
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
-    color: white;
+    color: black;
     transition: transform 0.2s, background-color 0.3s;
     text-align: center;
 }
 
 .category:hover {
-    background-color: #45a049;
+    background-color: #ffaa00;
     transform: scale(1.05);
 }
 
@@ -103,6 +119,7 @@ h1 {
 #orders-section {
     margin-left: 220px;
     padding: 20px;
+    display: none;
 }
 
 /* Bloczki zamówień */
@@ -133,6 +150,37 @@ h1 {
 }
 
 .remove-order-btn:hover {
+    background: darkred;
+}
+
+/* Lista zamówionych produktów */
+#order-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#order-list li {
+    background: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Przycisk usuwania produktów z zamówienia */
+.remove-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
     background: darkred;
 }
 
