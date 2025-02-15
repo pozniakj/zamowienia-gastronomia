@@ -1,4 +1,4 @@
-ocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const savedOrdersContainer = document.getElementById("saved-orders-container");
     const ordersSection = document.getElementById("orders-section");
     const orderList = document.getElementById("order-list");
@@ -164,3 +164,4 @@ ocument.addEventListener("DOMContentLoaded", () => {
     updateOrderSummary();
     updateSavedOrders();
 });
+
