@@ -142,11 +142,16 @@ h1 {
     background-color: #45a049;
 }
 
-/* Notatka w zapisanych zamówieniach */
-.order-card p {
+/* Estetyczna notatka w zamówieniu */
+.order-card p.note {
     font-size: 14px;
-    color: #444;
-    margin-top: 5px;
+    color: #333;
+    font-style: italic;
+    background: #f9f9f9;
+    padding: 10px;
+    border-left: 3px solid #4CAF50;
+    margin-top: 10px;
+    text-align: left;
 }
 
 /* Sekcja zamówień */
@@ -206,3 +211,4 @@ footer {
     color: #666;
     margin-left: 220px;
 }
+
