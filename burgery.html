@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frytki</title>
+    <title>Burgery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,15 +17,23 @@
     </nav>
 
     <header>
-        <h1>🍟 Frytki</h1>
-        <p>Wybierz frytki do zamówienia.</p>
+        <h1>🍔 Burgery</h1>
+        <p>Wybierz burgera do zamówienia.</p>
     </header>
 
+    <!-- MENU Z BURGERAMI -->
     <div class="menu-container">
-        <button class="product-button" onclick="addToOrder('Małe Frytki', 7)">Małe - 7 PLN</button>
-        <button class="product-button" onclick="addToOrder('Duże Frytki', 10)">Duże - 10 PLN</button>
+        <button class="product-button" onclick="addToOrder('Classic', 28)">Classic - 28 PLN</button>
+        <button class="product-button" onclick="addToOrder('BBQ', 32)">BBQ - 32 PLN</button>
+        <button class="product-button" onclick="addToOrder('Oklahoma', 28)">Oklahoma - 28 PLN</button>
+        <button class="product-button" onclick="addToOrder('Chipotle', 30)">Chipotle - 30 PLN</button>
+        <button class="product-button" onclick="addToOrder('Truffla', 30)">Truffla - 30 PLN</button>
+        <button class="product-button" onclick="addToOrder('Piekielny', 32)">Piekielny - 32 PLN</button>
+        <button class="product-button" onclick="addToOrder('KimCheese', 32)">KimCheese - 32 PLN</button>
+        <button class="product-button" onclick="addToOrder('Bydlak', 35)">Bydlak - 35 PLN</button>
     </div>
 
+    <!-- SEKCJA ZAMÓWIENIA -->
     <section id="orders-section">
         <h2>📜 Twoje zamówienie</h2>
         <ul id="order-list"></ul>
@@ -37,4 +45,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
