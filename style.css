@@ -42,19 +42,20 @@ body {
 }
 
 /* Nagłówek menu bocznego */
-/* Styl nagłówka w menu bocznym */
 .menu-title {
     padding: 15px;
     font-size: 18px;
-    color: white;
+    color: white;  /* Biały kolor jak inne elementy w menu */
     text-align: left;
     border-bottom: 1px solid #444;
-    cursor: pointer; /* Pozwala na kliknięcie */
+    text-decoration: none; /* Usuwa podkreślenie */
+    font-weight: normal; /* Usuwa pogrubienie, jeśli było */
 }
 
-/* Efekt kliknięcia jak w przyciskach menu */
+/* Usunięcie efektu hover */
 .menu-title:hover {
-    background: #444;
+    background: none;
+    cursor: default;
 }
 
 /* Nagłówek */
