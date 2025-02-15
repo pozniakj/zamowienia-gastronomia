@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
                 orderCard.innerHTML = orderContent;
 
+                const removeButton = document.createElement("button");
+                removeButton.classList.add("remove-order-btn");
+                removeButton.innerHTML = "🗑 Usuń zamówienie";
+                removeButton.onclick = () => {
+                    historyOrders[selectedDate].splice(index, 1);
+                    if (historyOrders[selectedDate].length === 0) delete historyOrders[selectedDate];
+                    localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
+                    datePicker.dispatchEvent(new Event("change"));
+                };
+
+                orderCard.appendChild(removeButton);
                 historyOrdersContainer.appendChild(orderCard);
             });
         } else {
@@ -31,3 +42,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
