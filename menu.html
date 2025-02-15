@@ -3,40 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Menu</title>
+    <title>Menu Główne</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <nav class="sidebar">
         <ul>
-            <li onclick="showOrders()">📜 Zamówienia</li>
-            <li class="menu-title" onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
+            <li onclick="window.location.href='menu.html'">📜 Zamówienia</li>
+            <li onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
         </ul>
     </nav>
-    
 
     <header>
-        <h1>🛒 System POS</h1>
-        <p>Wybierz kategorię produktów.</p>
+        <h1>🍽 Menu Główne</h1>
     </header>
 
-    <!-- KATEGORIE NA ŚRODKU STRONY -->
     <div class="menu-container">
-        <a href="burgery.html" class="menu-item">🍔 Burgery</a>
-        <a href="frytki.html" class="menu-item">🍟 Frytki</a>
-        <a href="dodatki.html" class="menu-item">🥗 Dodatki</a>
-        <a href="historia.html" class="menu-item">📅 Przeglądaj historię</a>
+        <a href="burgery.html" class="category">🍔 Burgery</a>
+        <a href="frytki.html" class="category">🍟 Frytki</a>
+        <a href="dodatki.html" class="category">🥗 Dodatki</a>
     </div>
 
     <section id="orders-section">
-        <h2>📜 Zapisane zamówienia</h2>
-        <div id="saved-orders-container"></div>
+        <h2>📜 Twoje zamówienie</h2>
+        <ul id="order-list"></ul>
+        <p id="total-price">Cena całkowita: 0 PLN</p>
+        <button id="save-order">Zapisz zamówienie</button>
     </section>
 
-    <footer>
-        <p>&copy; 2025 System POS Zamówień</p>
-    </footer>
+    <div id="saved-orders-container"></div>
 
     <script src="app.js"></script>
 </body>

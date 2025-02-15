@@ -21,23 +21,17 @@
     <div class="menu-container">
         <button class="product-button" onclick="addToOrder('Classic', 28)">Classic - 28 PLN</button>
         <button class="product-button" onclick="addToOrder('BBQ', 32)">BBQ - 32 PLN</button>
-        <button class="product-button" onclick="addToOrder('Oklahoma', 28)">Oklahoma - 28 PLN</button>
-        <button class="product-button" onclick="addToOrder('Chipotle', 30)">Chipotle - 30 PLN</button>
-        <button class="product-button" onclick="addToOrder('Truffla', 30)">Truffla - 30 PLN</button>
-        <button class="product-button" onclick="addToOrder('Piekielny', 32)">Piekielny - 32 PLN</button>
-        <button class="product-button" onclick="addToOrder('KimCheese', 32)">KimCheese - 32 PLN</button>
-        <button class="product-button" onclick="addToOrder('Bydlak', 35)">Bydlak - 35 PLN</button>
     </div>
 
     <section id="orders-section">
         <h2>📜 Twoje zamówienie</h2>
         <ul id="order-list"></ul>
         <p id="total-price">Cena całkowita: 0 PLN</p>
+        <textarea id="order-note" placeholder="Dodaj notatkę do zamówienia..." rows="2"></textarea>
         <button id="save-order">Zapisz zamówienie</button>
     </section>
-
-    <button class="back-button" onclick="window.location.href='menu.html'">🔙 Powrót</button>
 
     <script src="app.js"></script>
 </body>
 </html>
+

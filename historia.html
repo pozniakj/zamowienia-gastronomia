@@ -3,20 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📅 Historia Zamówień</title>
+    <title>Historia Zamówień</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>📅 Historia Zamówień</h1>
 
-    <label for="date-picker">Wybierz datę:</label>
+    <nav class="sidebar">
+        <ul>
+            <li onclick="window.location.href='menu.html'">📜 Zamówienia</li>
+            <li onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>📅 Historia Zamówień</h1>
+    </header>
+
     <input type="date" id="date-picker">
-
-    <h2>Zamówienia z wybranego dnia:</h2>
     <div id="history-orders-container"></div>
 
-    <a href="menu.html" class="menu-item">⬅ Powrót</a>
+    <button class="back-button" onclick="window.location.href='menu.html'">🔙 Powrót</button>
 
-    <script src="historia.js"></script>
-</body>
-</html>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const datePicker = document.getElementById("date-picker");
+            const historyOrdersContainer = document.getElementById("history-orders-container");
+
+            const historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
+
+            datePicker.addEventListener("change", () => {
+                const selectedDate = datePicker.value;
+                historyOrdersContainer.innerHTML = "";
+
+                if (!historyOrders[selectedDate] || historyOrders[selectedDate].length === 0) {
+                    historyOrdersContainer.innerHTML = "<p>Brak zamówień dla wybranej daty.</p>";
+                    return;
+                }
+
+                historyOrders[selectedDate].forEach((order, index) => {
+                    const orderCard = document.createElement("div");
+   
+
