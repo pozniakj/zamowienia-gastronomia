@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        savedOrders.push(order);
+        savedOrders.push([...order]);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
         const today = new Date().toISOString().split("T")[0];
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             historyOrders[today] = [];
         }
 
-        historyOrders[today].push(order);
+        historyOrders[today].push([...order]);
         localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
 
         order = [];
@@ -101,31 +101,26 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSavedOrders();
     });
 
-    window.showOrders = () => {
-        ordersSection.style.display = "block";
-        updateSavedOrders();
-    };
-
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
-
+        
         if (savedOrders.length === 0) {
             savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
             return;
         }
-
+        
         savedOrders.forEach((order, index) => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
 
             let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
             let totalPrice = 0;
-
+            
             order.forEach(item => {
                 orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
-
+            
             orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
             orderCard.innerHTML = orderContent;
 
@@ -137,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
                 updateSavedOrders();
             };
-
+            
             orderCard.appendChild(removeButton);
             savedOrdersContainer.appendChild(orderCard);
         });
