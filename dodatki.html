@@ -8,30 +8,24 @@
 </head>
 <body>
 
-    <!-- MENU BOCZNE -->
     <nav class="sidebar">
         <ul>
             <li onclick="window.location.href='menu.html'">📜 Zamówienia</li>
-            <li class="menu-title" onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
         </ul>
     </nav>
 
     <header>
         <h1>🥗 Dodatki</h1>
-        <p>Wybierz dodatki do zamówienia.</p>
     </header>
 
     <div class="menu-container">
         <button class="product-button" onclick="addToOrder('Dodatkowe Mięso', 12)">Dodatkowe Mięso - 12 PLN</button>
-        <button class="product-button" onclick="addToOrder('Składnik 2zł', 2)">Składnik 2 PLN</button>
-        <button class="product-button" onclick="addToOrder('Składnik 4zł', 4)">Składnik 4 PLN</button>
     </div>
 
     <section id="orders-section">
         <h2>📜 Twoje zamówienie</h2>
         <ul id="order-list"></ul>
         <p id="total-price">Cena całkowita: 0 PLN</p>
-        <textarea id="order-note" placeholder="Dodaj notatkę do zamówienia..." rows="2"></textarea>
         <button id="save-order">Zapisz zamówienie</button>
     </section>
 

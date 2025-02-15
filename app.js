@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const orderList = document.getElementById("order-list");
     const totalPriceElem = document.getElementById("total-price");
     const saveOrderButton = document.getElementById("save-order");
-    const orderNoteInput = document.getElementById("order-note");
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -50,26 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const orderNote = orderNoteInput ? orderNoteInput.value.trim() : "";
-
-        savedOrders.push({ items: [...order], note: orderNote });
+        savedOrders.push({ items: [...order] });
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
-        // Zapis do historii zamówień według daty
-        const today = new Date().toISOString().split("T")[0]; 
-        let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
-
-        if (!historyOrders[today]) {
-            historyOrders[today] = [];
-        }
-
-        historyOrders[today].push({ items: [...order], note: orderNote });
-        localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
-
-        // Reset zamówienia po zapisaniu
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
-        orderNoteInput.value = "";
         updateSavedOrders();
         updateOrderSummary();
     });
@@ -95,12 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
-            if (orderData.note) {
-                orderContent += `<p class="note"><strong>Notatka:</strong> ${orderData.note}</p>`;
-            }
             orderCard.innerHTML = orderContent;
 
-            // Dodanie przycisku usuwania zamówienia
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
             removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';

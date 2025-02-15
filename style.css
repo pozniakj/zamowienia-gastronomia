@@ -41,20 +41,6 @@ body {
     background: #555;
 }
 
-/* Nagłówek menu bocznego */
-.menu-title {
-    padding: 15px;
-    font-size: 18px;
-    color: white;
-    text-align: left;
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-}
-
-.menu-title:hover {
-    background: #444;
-}
-
 /* Nagłówek */
 h1 {
     font-size: 28px;
@@ -111,47 +97,6 @@ h1 {
 .menu-item:hover, .product-button:hover {
     background-color: #45a049;
     transform: scale(1.05);
-}
-
-/* Pole notatki */
-#order-note {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
-}
-
-/* Przycisk zapisu zamówienia */
-#save-order {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#save-order:hover {
-    background-color: #45a049;
-}
-
-/* Estetyczna notatka w zamówieniu */
-.order-card .note {
-    font-size: 14px;
-    color: #333;
-    font-style: italic;
-    background: #f9f9f9;
-    padding: 10px;
-    border-left: 3px solid #4CAF50;
-    margin-top: 10px;
-    text-align: left;
 }
 
 /* Sekcja zamówień */
