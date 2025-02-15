@@ -8,8 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
 
-    // 🔥 Upewnij się, że zamówienie pobiera się poprawnie
+    // 🔥 Funkcja do aktualizacji podsumowania zamówienia
     const updateOrderSummary = () => {
+        if (!orderList || !totalPriceElem) return;
+
         orderList.innerHTML = "";
         let totalPrice = 0;
 
@@ -25,7 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    // ✅ Zapisuje zamówienie i notatkę
+    // ✅ Funkcja do usuwania pozycji z zamówienia
+    window.removeFromOrder = (index) => {
+        order.splice(index, 1);
+        updateOrderSummary();
+    };
+
+    // ✅ Funkcja do zapisywania zamówienia
     saveOrderButton?.addEventListener("click", () => {
         if (!order || order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
@@ -34,11 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const orderNote = orderNoteInput.value.trim();
 
-        // Dodanie zamówienia do listy zapisanych zamówień
         savedOrders.push({ items: [...order], note: orderNote });
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
-        // Zapis do historii zamówień według daty
+        // 📌 Zapis do historii zamówień według daty
         const today = new Date().toISOString().split("T")[0]; 
         let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
 
@@ -57,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     });
 
-    // ✅ Aktualizacja zapisanych zamówień
+    // ✅ Funkcja do wyświetlania zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 

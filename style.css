@@ -75,19 +75,19 @@ h1 {
 
 .category {
     padding: 20px 40px;
-    background-color: #ffcc00;
+    background-color: #4CAF50;
     font-size: 24px;
     font-weight: bold;
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
-    color: black;
+    color: white;
     transition: transform 0.2s, background-color 0.3s;
     text-align: center;
 }
 
 .category:hover {
-    background-color: #ffaa00;
+    background-color: #45a049;
     transform: scale(1.05);
 }
 
@@ -143,7 +143,7 @@ h1 {
 }
 
 /* Estetyczna notatka w zamówieniu */
-.order-card p.note {
+.order-card .note {
     font-size: 14px;
     color: #333;
     font-style: italic;
@@ -211,4 +211,3 @@ footer {
     color: #666;
     margin-left: 220px;
 }
-
