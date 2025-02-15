@@ -20,6 +20,8 @@
 
     <div class="menu-container">
         <button class="product-button" onclick="addToOrder('Dodatkowe Mięso', 12)">Dodatkowe Mięso - 12 PLN</button>
+        <button class="product-button" onclick="addToOrder('Składnik 2zł', 2)">Składnik 2 PLN</button>
+        <button class="product-button" onclick="addToOrder('Składnik 4zł', 4)">Składnik 4 PLN</button>
     </div>
 
     <section id="orders-section">
@@ -28,6 +30,8 @@
         <p id="total-price">Cena całkowita: 0 PLN</p>
         <button id="save-order">Zapisz zamówienie</button>
     </section>
+
+    <button class="back-button" onclick="window.location.href='menu.html'">🔙 Powrót</button>
 
     <script src="app.js"></script>
 </body>

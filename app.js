@@ -1,15 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const savedOrdersContainer = document.getElementById("saved-orders-container");
     const orderList = document.getElementById("order-list");
     const totalPriceElem = document.getElementById("total-price");
     const saveOrderButton = document.getElementById("save-order");
+    const savedOrdersContainer = document.getElementById("saved-orders-container");
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
 
     function updateOrderSummary() {
-        if (!orderList || !totalPriceElem) return;
-
         orderList.innerHTML = "";
         let totalPrice = 0;
 
@@ -33,13 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             order.push({ name, price, quantity: 1 });
         }
 
-        localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
     };
 
     window.removeFromOrder = (index) => {
         order.splice(index, 1);
-        localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
     };
 
@@ -53,12 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
         order = [];
-        localStorage.setItem("currentOrder", JSON.stringify(order));
         updateSavedOrders();
         updateOrderSummary();
     });
 
     function updateSavedOrders() {
+        if (!savedOrdersContainer) return;
+
         savedOrdersContainer.innerHTML = "";
 
         if (savedOrders.length === 0) {
@@ -83,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
-            removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
+            removeButton.innerHTML = 'Usuń';
             removeButton.onclick = () => {
                 savedOrders.splice(index, 1);
                 localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
