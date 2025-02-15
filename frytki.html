@@ -3,31 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frytki</title>
+    <title>🍟 Frytki</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <nav class="sidebar">
-        <ul>
-            <li onclick="window.location.href='menu.html'">📜 Zamówienia</li>
-        </ul>
-    </nav>
-
-    <header>
-        <h1>🍟 Frytki</h1>
-    </header>
-
+    <h1>🍟 Frytki</h1>
     <div id="fries-items" class="menu-container"></div>
 
-    <section id="orders-section">
-        <h2>📜 Twoje zamówienie</h2>
-        <ul id="order-list"></ul>
-        <p id="total-price">Cena całkowita: 0 PLN</p>
-        <button id="save-order">Zapisz zamówienie</button>
-    </section>
+    <h2>Twoje zamówienie:</h2>
+    <ul id="order-list"></ul>
+    <p id="total-price">Łączna cena: 0 PLN</p>
+    <button id="save-order" class="menu-item">💾 Zapisz zamówienie</button>
 
-    <button class="back-button" onclick="window.location.href='menu.html'">🔙 Powrót</button>
+    <a href="menu.html" class="menu-item">⬅ Powrót</a>
 
     <script src="app.js"></script>
 </body>
