@@ -41,20 +41,19 @@ body {
     background: #555;
 }
 
-/* Historia Zamówień jako element listy menu */
-.sidebar ul li.history-button {
-    background: none;
-    color: white;
-    font-size: 18px;
-    font-weight: normal;
-    text-align: left;
-    cursor: pointer;
+/* Nagłówek menu bocznego */
+.menu-title {
     padding: 15px;
+    font-size: 18px;
+    color: white;
+    text-align: left;
     border-bottom: 1px solid #444;
 }
 
-.sidebar ul li.history-button:hover {
-    background: #555;
+/* Usuwanie domyślnych efektów dla napisu */
+.menu-title:hover {
+    background: none;
+    cursor: default;
 }
 
 /* Nagłówek */
@@ -139,19 +138,18 @@ h1 {
 
 /* Przycisk usuwania zamówienia */
 .remove-order-btn {
-    background: #ff4d4d;
+    background: red;
     color: white;
     border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
+    padding: 8px;
     cursor: pointer;
-    font-size: 16px;
     border-radius: 5px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .remove-order-btn:hover {
-    background: #ff1a1a;
+    background: darkred;
 }
 
 /* Lista zamówionych produktów */
@@ -185,6 +183,19 @@ h1 {
     background: darkred;
 }
 
+/* Historia zamówień - kalendarz */
+#date-picker {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Kontener na zamówienia historyczne */
+#history-orders-container {
+    margin-top: 20px;
+}
+
 /* Stopka */
 footer {
     margin-top: 40px;
@@ -192,3 +203,4 @@ footer {
     color: #666;
     margin-left: 220px;
 }
+

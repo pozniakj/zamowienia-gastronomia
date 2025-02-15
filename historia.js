@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
                 orderCard.innerHTML = orderContent;
 
+                // Przycisk usuwania zamówienia
                 const removeButton = document.createElement("button");
                 removeButton.classList.add("remove-order-btn");
                 removeButton.innerHTML = "🗑 Usuń zamówienie";
