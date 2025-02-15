@@ -41,6 +41,28 @@ body {
     background: #555;
 }
 
+/* Przycisk Historia Zamówień */
+.history-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #ffcc00;
+    color: black;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.history-button:hover {
+    background: #ffaa00;
+}
+
 /* Nagłówek */
 h1 {
     font-size: 28px;
@@ -59,7 +81,6 @@ h1 {
     margin-top: 40px;
 }
 
-/* Kategorie (Burgery, Frytki, Dodatki) */
 .category {
     padding: 20px 40px;
     background-color: #ffcc00;
@@ -177,5 +198,3 @@ footer {
     color: #666;
     margin-left: 220px;
 }
-
-   

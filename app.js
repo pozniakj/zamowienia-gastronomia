@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // Tworzenie przycisków produktów
     const createItems = (container, items) => {
         if (!container) return;
         container.innerHTML = "";
@@ -46,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Dodawanie produktu do zamówienia
     const addToOrder = (item) => {
         const existingItem = order.find(o => o.name === item.name);
         if (existingItem) {
@@ -57,13 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     };
 
-    // Usuwanie produktu z zamówienia
     window.removeFromOrder = (index) => {
         order.splice(index, 1);
         updateOrderSummary();
     };
 
-    // Aktualizacja podsumowania zamówienia
     const updateOrderSummary = () => {
         if (!orderList || !totalPriceElem) return;
         orderList.innerHTML = "";
@@ -81,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    // Zapisywanie zamówienia i resetowanie
     saveOrderButton?.addEventListener("click", () => {
         if (order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
@@ -91,19 +86,27 @@ document.addEventListener("DOMContentLoaded", () => {
         savedOrders.push(order);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
+        const today = new Date().toISOString().split("T")[0]; 
+        let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
+
+        if (!historyOrders[today]) {
+            historyOrders[today] = [];
+        }
+
+        historyOrders[today].push(order);
+        localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
+
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
         updateSavedOrders();
     });
 
-    // Wyświetlanie zapisanych zamówień
     window.showOrders = () => {
         ordersSection.style.display = "block";
         updateSavedOrders();
     };
 
-    // Aktualizacja zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
@@ -141,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Inicjalizacja produktów w odpowiednich kategoriach
     if (burgerContainer) {
         createItems(burgerContainer, menu.burgers);
     } else if (friesContainer) {
