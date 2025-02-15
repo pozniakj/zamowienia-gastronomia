@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const savedOrdersContainer = document.getElementById("saved-orders-container");
-    const ordersSection = document.getElementById("orders-section");
     const orderList = document.getElementById("order-list");
     const totalPriceElem = document.getElementById("total-price");
     const saveOrderButton = document.getElementById("save-order");
@@ -9,17 +8,37 @@ document.addEventListener("DOMContentLoaded", () => {
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
 
+    // 🔥 Upewnij się, że zamówienie pobiera się poprawnie
+    const updateOrderSummary = () => {
+        orderList.innerHTML = "";
+        let totalPrice = 0;
+
+        order.forEach((item, index) => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN 
+                <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
+            orderList.appendChild(listItem);
+            totalPrice += item.price * item.quantity;
+        });
+
+        totalPriceElem.textContent = `Cena całkowita: ${totalPrice} PLN`;
+        localStorage.setItem("currentOrder", JSON.stringify(order));
+    };
+
+    // ✅ Zapisuje zamówienie i notatkę
     saveOrderButton?.addEventListener("click", () => {
-        if (order.length === 0) {
+        if (!order || order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
             return;
         }
 
-        const orderNote = orderNoteInput ? orderNoteInput.value.trim() : "";
+        const orderNote = orderNoteInput.value.trim();
 
-        savedOrders.push({ items: order, note: orderNote });
+        // Dodanie zamówienia do listy zapisanych zamówień
+        savedOrders.push({ items: [...order], note: orderNote });
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
+        // Zapis do historii zamówień według daty
         const today = new Date().toISOString().split("T")[0]; 
         let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
 
@@ -27,15 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
             historyOrders[today] = [];
         }
 
-        historyOrders[today].push({ items: order, note: orderNote });
+        historyOrders[today].push({ items: [...order], note: orderNote });
         localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
 
+        // ✅ Resetowanie zamówienia po zapisaniu
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
-        orderNoteInput.value = ""; // Czyszczenie pola notatki
+        orderNoteInput.value = "";
         updateSavedOrders();
+        updateOrderSummary();
     });
 
+    // ✅ Aktualizacja zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
@@ -62,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             orderCard.innerHTML = orderContent;
 
+            // ✅ Dodanie przycisku usuwania zamówienia
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
             removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
@@ -76,5 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    updateOrderSummary();
     updateSavedOrders();
 });
