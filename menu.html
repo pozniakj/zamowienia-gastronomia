@@ -3,44 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Menu</title>
+    <title>📜 Menu</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
-
-
 </head>
 <body>
+    <h1>📜 Menu</h1>
 
-    <nav class="sidebar">
-        <ul>
-            <li onclick="showOrders()">📜 Zamówienia</li>
-            <li class="menu-title" onclick="window.location.href='historia.html'">📅 Historia Zamówień</li>
-        </ul>
-    </nav>
-    
-    
-
-    <header>
-        <h1>🛒 System POS</h1>
-        <p>Wybierz kategorię produktów.</p>
-    </header>
-
-    <!-- KATEGORIE NA ŚRODKU STRONY -->
-    <div class="menu-container">
-        <a href="burgery.html" class="menu-item">🍔 Burgery</a>
-        <a href="frytki.html" class="menu-item">🍟 Frytki</a>
-        <a href="dodatki.html" class="menu-item">🥗 Dodatki</a>
-        
-    </div>
-
-    <section id="orders-section">
-        <h2>📜 Zapisane zamówienia</h2>
-        <div id="saved-orders-container"></div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 System POS Zamówień</p>
-    </footer>
+    <ul>
+        <li><a href="burgery.html">🍔 Burgery</a></li>
+        <li><a href="frytki.html">🍟 Frytki</a></li>
+        <li><a href="dodatki.html">🥗 Dodatki</a></li>
+        <li onclick="showOrders()">📜 Zapisane Zamówienia</li>
+    </ul>
 
     <script src="app.js"></script>
 </body>
