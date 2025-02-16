@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidesContainer = document.getElementById("sides-items");
     const orderNoteInput = document.getElementById("order-note");
 
+    if (!burgerContainer && !friesContainer && !sidesContainer) {
+        console.error("Błąd: Nie znaleziono kontenerów produktów. Sprawdź HTML.");
+        return;
+    }
+
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
     let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
@@ -37,12 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ingredients = ["Sałata", "Cebula", "Sos", "Ogórek"];
 
-    const showCustomizationOptions = (item) => {
-        const customOptions = prompt(`Wybierz składniki do usunięcia (oddziel przecinkiem) lub zostaw puste, aby nie usuwać: ${ingredients.join(", ")}`);
-        let removedIngredients = customOptions ? customOptions.split(",").map(i => i.trim()).filter(i => i !== "") : [];
-        addToOrder(item, removedIngredients);
-    };
-
     const createItems = (container, items) => {
         if (!container) return;
         container.innerHTML = "";
@@ -53,6 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
             button.onclick = () => showCustomizationOptions(item);
             container.appendChild(button);
         });
+    };
+
+    const showCustomizationOptions = (item) => {
+        const customOptions = prompt(`Wybierz składniki do usunięcia (oddziel przecinkiem) lub zostaw puste, aby nie usuwać: ${ingredients.join(", ")}`);
+        let removedIngredients = customOptions ? customOptions.split(",").map(i => i.trim()).filter(i => i !== "") : [];
+        addToOrder(item, removedIngredients);
     };
 
     const addToOrder = (item, removedIngredients = []) => {
