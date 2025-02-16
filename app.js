@@ -35,40 +35,45 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // 🛠 Naprawione: Tworzenie przycisków menu
+    const ingredients = ["Sałata", "Cebula", "Sos", "Ogórek"];
+
+    const showCustomizationOptions = (item) => {
+        const customOptions = prompt(`Wybierz składniki do usunięcia (oddziel przecinkiem): ${ingredients.join(", ")}`);
+        let removedIngredients = customOptions ? customOptions.split(",").map(i => i.trim()) : [];
+        addToOrder(item, removedIngredients);
+    };
+
     const createItems = (container, items) => {
         if (!container) return;
-        console.log(`Generowanie menu dla: ${container.id}`); // Debugowanie
         container.innerHTML = "";
         items.forEach(item => {
             const button = document.createElement("button");
             button.classList.add("product-button");
             button.textContent = `${item.name} - ${item.price} PLN`;
-            button.onclick = () => addToOrder(item);
+            button.onclick = () => showCustomizationOptions(item);
             container.appendChild(button);
         });
     };
 
-    // ✅ Dodanie zamówienia
-    const addToOrder = (item) => {
-        const existingItem = order.find(o => o.name === item.name);
+    const addToOrder = (item, removedIngredients = []) => {
+        const existingItem = order.find(o => o.name === item.name && JSON.stringify(o.removedIngredients) === JSON.stringify(removedIngredients));
         if (existingItem) {
             existingItem.quantity++;
         } else {
-            order.push({ ...item, quantity: 1 });
+            order.push({ ...item, quantity: 1, removedIngredients });
         }
         updateOrderSummary();
     };
 
-    // ✅ Aktualizacja podsumowania zamówienia
     const updateOrderSummary = () => {
         if (!orderList || !totalPriceElem) return;
         orderList.innerHTML = "";
         let totalPrice = 0;
 
         order.forEach((item, index) => {
+            let removedText = item.removedIngredients.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
             const listItem = document.createElement("li");
-            listItem.innerHTML = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN 
+            listItem.innerHTML = `${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN 
                 <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
             orderList.appendChild(listItem);
             totalPrice += item.price * item.quantity;
@@ -78,13 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    // ✅ Usuwanie pozycji z zamówienia
     window.removeFromOrder = (index) => {
         order.splice(index, 1);
         updateOrderSummary();
     };
 
-    // ✅ Zapisywanie zamówienia
     saveOrderButton?.addEventListener("click", () => {
         if (order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
@@ -110,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
         orderNoteInput.value = ""; // Wyczyść pole opisu
     });
 
-    // ✅ Aktualizacja zapisanych zamówień
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
 
@@ -131,7 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
             let totalPrice = 0;
 
             orderData.items.forEach(item => {
-                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                let removedText = item.removedIngredients?.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
+                orderContent += `<li>${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
 
@@ -143,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             orderCard.innerHTML = orderContent;
 
-            // 🗑 Przycisk usuwania zamówienia
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
             removeButton.textContent = "🗑 Usuń";
@@ -158,7 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // ✅ Generowanie menu dla każdej kategorii
+    updateSavedOrders();
+
     if (burgerContainer) {
         createItems(burgerContainer, menu.burgers);
     }
@@ -168,7 +171,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sidesContainer) {
         createItems(sidesContainer, menu.sides);
     }
-
-    updateOrderSummary();
-    updateSavedOrders();
 });
