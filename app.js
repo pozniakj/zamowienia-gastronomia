@@ -112,6 +112,41 @@ document.addEventListener("DOMContentLoaded", () => {
         orderNoteInput.value = ""; // Wyczyść pole opisu
     });
 
+    const updateSavedOrders = () => {
+        savedOrdersContainer.innerHTML = "";
+    
+        let savedOrders = JSON.parse(localStorage.getItem("savedOrders"));
+        if (!Array.isArray(savedOrders)) savedOrders = [];  
+    
+        if (savedOrders.length === 0) {
+            savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
+            return;
+        }
+    
+        savedOrders.forEach((orderData, index) => {
+            const orderCard = document.createElement("div");
+            orderCard.classList.add("order-card");
+    
+            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
+            let totalPrice = 0;
+    
+            orderData.items.forEach(item => {
+                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                totalPrice += item.price * item.quantity;
+            });
+    
+            orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+    
+            if (orderData.note) {
+                orderContent += `<p><strong>Notatka:</strong> ${orderData.note}</p>`;
+            }
+    
+            orderCard.innerHTML = orderContent;
+    
+            savedOrdersContainer.appendChild(orderCard);
+        });
+    };
+
     updateOrderSummary();
     updateSavedOrders();
 });
