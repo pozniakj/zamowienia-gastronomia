@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("🔄 Skrypt załadowany poprawnie."); // Debugowanie
+
     const savedOrdersContainer = document.getElementById("saved-orders-container");
     const ordersSection = document.getElementById("orders-section");
     const orderList = document.getElementById("order-list");
@@ -10,24 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const orderNoteInput = document.getElementById("order-note");
 
     if (!burgerContainer && !friesContainer && !sidesContainer) {
-        console.error("Błąd: Nie znaleziono kontenerów produktów. Sprawdź HTML.");
+        console.error("❌ Błąd: Nie znaleziono kontenerów produktów. Sprawdź HTML!");
         return;
+    } else {
+        console.log("✅ Kontenery produktów znalezione.");
     }
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
-    let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
 
     const menu = {
         burgers: [
             { name: "Classic", price: 28 },
             { name: "BBQ", price: 32 },
-            { name: "Oklahoma", price: 28 },
-            { name: "Chipotle", price: 30 },
-            { name: "Truffla", price: 30 },
-            { name: "Piekielny", price: 32 },
-            { name: "KimCheese", price: 32 },
-            { name: "Bydlak", price: 35 }
+            { name: "Oklahoma", price: 28 }
         ],
         fries: [
             { name: "Małe", price: 7 },
@@ -35,16 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
         sides: [
             { name: "Dodatkowe Mięso", price: 12 },
-            { name: "Składnik 2zł", price: 2 },
-            { name: "Składnik 4zł", price: 4 }
+            { name: "Składnik 2zł", price: 2 }
         ]
     };
 
-    const ingredients = ["Sałata", "Cebula", "Sos", "Ogórek"];
-
     const createItems = (container, items) => {
         if (!container) {
-            console.error("Błąd: Kontener na produkty nie został znaleziony.");
+            console.error("❌ Błąd: Kontener na produkty nie istnieje.");
             return;
         }
         container.innerHTML = "";
@@ -52,19 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const button = document.createElement("button");
             button.classList.add("product-button");
             button.textContent = `${item.name} - ${item.price} PLN`;
-            button.onclick = () => showCustomizationOptions(item);
+            button.onclick = () => addToOrder(item);
             container.appendChild(button);
         });
+
+        console.log(`✅ Produkty dodane do ${container.id}`);
     };
 
-    const showCustomizationOptions = (item) => {
-        const customOptions = prompt(`Wybierz składniki do usunięcia (oddziel przecinkiem) lub zostaw puste, aby nie usuwać: ${ingredients.join(", ")}`);
-        let removedIngredients = customOptions ? customOptions.split(",").map(i => i.trim()).filter(i => i !== "") : [];
-        addToOrder(item, removedIngredients);
-    };
-
-    const addToOrder = (item, removedIngredients = []) => {
-        order.push({ ...item, quantity: 1, removedIngredients });
+    const addToOrder = (item) => {
+        order.push({ ...item, quantity: 1 });
         updateOrderSummary();
     };
 
@@ -74,9 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let totalPrice = 0;
 
         order.forEach((item, index) => {
-            let removedText = item.removedIngredients.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : " (Bez zmian)";
             const listItem = document.createElement("li");
-            listItem.innerHTML = `${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN 
+            listItem.innerHTML = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN 
                 <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
             orderList.appendChild(listItem);
             totalPrice += item.price * item.quantity;
@@ -91,37 +81,22 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
     };
 
-    saveOrderButton?.addEventListener("click", () => {
-        if (order.length === 0) {
-            alert("Nie można zapisać pustego zamówienia!");
-            return;
-        }
-
-        const orderNote = orderNoteInput?.value.trim() || ""; 
-
-        const orderData = {
-            items: [...order],
-            note: orderNote,
-            timestamp: new Date().toLocaleString()
-        };
-
-        savedOrders.push(orderData);
-        localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
-
-        order = [];
-        localStorage.setItem("currentOrder", JSON.stringify(order));
-        updateOrderSummary();
+    window.showOrders = () => {
+        console.log("✅ Kliknięto 'Pokaż zapisane zamówienia'.");
+        ordersSection.style.display = "block";
         updateSavedOrders();
-
-        orderNoteInput.value = ""; 
-    });
+    };
 
     const updateSavedOrders = () => {
+        if (!savedOrdersContainer) {
+            console.error("❌ Błąd: Nie znaleziono #saved-orders-container w HTML!");
+            return;
+        }
         savedOrdersContainer.innerHTML = "";
 
         let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
 
-        if (!Array.isArray(savedOrders)) savedOrders = [];  
+        if (!Array.isArray(savedOrders)) savedOrders = [];
 
         if (savedOrders.length === 0) {
             savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
@@ -132,12 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
 
-            let orderContent = `<h3>📝 Zamówienie #${index + 1} (${orderData.timestamp})</h3><ul>`;
+            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
             let totalPrice = 0;
 
             orderData.items.forEach(item => {
-                let removedText = item.removedIngredients?.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : " (Bez zmian)";
-                orderContent += `<li>${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
 
@@ -148,17 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             orderCard.innerHTML = orderContent;
-
-            const removeButton = document.createElement("button");
-            removeButton.classList.add("remove-order-btn");
-            removeButton.textContent = "🗑 Usuń";
-            removeButton.onclick = () => {
-                savedOrders.splice(index, 1);
-                localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
-                updateSavedOrders();
-            };
-
-            orderCard.appendChild(removeButton);
             savedOrdersContainer.appendChild(orderCard);
         });
     };
@@ -168,4 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (burgerContainer) createItems(burgerContainer, menu.burgers);
     if (friesContainer) createItems(friesContainer, menu.fries);
     if (sidesContainer) createItems(sidesContainer, menu.sides);
+
+    updateOrderSummary();
 });
