@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const createItems = (container, items) => {
         if (!container) return;
+        console.log(`Ładowanie pozycji dla: ${container.id}`);
         container.innerHTML = "";
         items.forEach(item => {
             const button = document.createElement("button");
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
         updateSavedOrders();
 
-        orderNoteInput.value = ""; // Wyczyść pole opisu
+        orderNoteInput.value = ""; 
     });
 
     const updateSavedOrders = () => {
