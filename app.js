@@ -35,7 +35,77 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    const ingredients = ["Sałata", "Cebula", "Sos", "Ogórek"];
+    saveOrderButton?.addEventListener("click", () => {
+        if (order.length === 0) {
+            alert("Nie można zapisać pustego zamówienia!");
+            return;
+        }
+
+        const orderNote = orderNoteInput?.value.trim() || ""; 
+
+        const orderData = {
+            items: [...order],
+            note: orderNote,
+            timestamp: new Date().toLocaleString()
+        };
+
+        savedOrders.push(orderData);
+        localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
+
+        order = [];
+        localStorage.setItem("currentOrder", JSON.stringify(order));
+        updateOrderSummary();
+        updateSavedOrders();
+
+        orderNoteInput.value = ""; // Wyczyść pole opisu
+    });
+
+    const updateSavedOrders = () => {
+        savedOrdersContainer.innerHTML = "";
+
+        let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
+
+        if (!Array.isArray(savedOrders)) savedOrders = [];  
+
+        if (savedOrders.length === 0) {
+            savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
+            return;
+        }
+
+        savedOrders.forEach((orderData, index) => {
+            const orderCard = document.createElement("div");
+            orderCard.classList.add("order-card");
+
+            let orderContent = `<h3>📝 Zamówienie #${index + 1} (${orderData.timestamp})</h3><ul>`;
+            let totalPrice = 0;
+
+            orderData.items.forEach(item => {
+                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                totalPrice += item.price * item.quantity;
+            });
+
+            orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+
+            if (orderData.note) {
+                orderContent += `<p><strong>Notatka:</strong> ${orderData.note}</p>`;
+            }
+
+            orderCard.innerHTML = orderContent;
+
+            // Przycisk usuwania zamówienia
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-order-btn");
+            removeButton.textContent = "🗑 Usuń";
+            removeButton.onclick = () => {
+                savedOrders.splice(index, 1);
+                localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
+                updateSavedOrders();
+            };
+
+            orderCard.appendChild(removeButton);
+            savedOrdersContainer.appendChild(orderCard);
+        });
+    };
 
     const createItems = (container, items) => {
         if (!container) return;
@@ -44,49 +114,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const button = document.createElement("button");
             button.classList.add("product-button");
             button.textContent = `${item.name} - ${item.price} PLN`;
-            button.onclick = () => showCustomizationOptions(item);
+            button.onclick = () => addToOrder(item);
             container.appendChild(button);
         });
     };
 
-    const showCustomizationOptions = (item) => {
-        document.querySelector(".custom-options")?.remove();
-
-        const customOptions = document.createElement("div");
-        customOptions.classList.add("custom-options");
-        customOptions.style.position = "fixed";
-        customOptions.style.top = "50%";
-        customOptions.style.left = "50%";
-        customOptions.style.transform = "translate(-50%, -50%)";
-        customOptions.style.background = "#fff";
-        customOptions.style.padding = "20px";
-        customOptions.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.2)";
-        customOptions.style.borderRadius = "8px";
-        customOptions.style.zIndex = "1000";
-
-        let optionsHTML = `<h3>Wybierz składniki do usunięcia:</h3>`;
-        ingredients.forEach(ingredient => {
-            optionsHTML += `<label><input type="checkbox" value="${ingredient}"> ${ingredient}</label><br>`;
-        });
-        optionsHTML += `
-            <button id="add-custom-order">Dodaj do zamówienia</button>
-            <button id="cancel-custom-order">Anuluj</button>
-        `;
-
-        customOptions.innerHTML = optionsHTML;
-        document.body.appendChild(customOptions);
-
-        document.getElementById("add-custom-order").onclick = () => addToOrderWithCustomization(item);
-        document.getElementById("cancel-custom-order").onclick = () => customOptions.remove();
+    const addToOrder = (item) => {
+        const existingItem = order.find(o => o.name === item.name);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            order.push({ ...item, quantity: 1 });
+        }
+        updateOrderSummary();
     };
 
-    const addToOrderWithCustomization = (item) => {
-        const selectedOptions = document.querySelectorAll(".custom-options input:checked");
-        let removedIngredients = [];
-        selectedOptions.forEach(option => removedIngredients.push(option.value));
-
-        order.push({ name: item.name, price: item.price, quantity: 1, removedIngredients });
-        document.querySelector(".custom-options").remove();
+    window.removeFromOrder = (index) => {
+        order.splice(index, 1);
         updateOrderSummary();
     };
 
@@ -96,9 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let totalPrice = 0;
 
         order.forEach((item, index) => {
-            let removedText = item.removedIngredients?.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
             const listItem = document.createElement("li");
-            listItem.innerHTML = `${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN 
+            listItem.innerHTML = `${item.name} x${item.quantity} - ${item.price * item.quantity} PLN 
                 <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
             orderList.appendChild(listItem);
             totalPrice += item.price * item.quantity;
@@ -108,23 +151,16 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    window.removeFromOrder = (index) => {
-        order.splice(index, 1);
-        updateOrderSummary();
-    };
-
-    updateOrderSummary();
+    updateSavedOrders();
 
     if (burgerContainer) {
-        console.log("Generowanie burgerów...");
         createItems(burgerContainer, menu.burgers);
     }
     if (friesContainer) {
-        console.log("Generowanie frytek...");
         createItems(friesContainer, menu.fries);
     }
     if (sidesContainer) {
-        console.log("Generowanie dodatków...");
         createItems(sidesContainer, menu.sides);
     }
 });
+
