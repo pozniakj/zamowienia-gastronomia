@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
-
+    const orderNoteInput = document.getElementById("order-note");
+    
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
     let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
-
+    
     const menu = {
         burgers: [
             { name: "Classic", price: 28 },
@@ -83,86 +84,33 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Nie można zapisać pustego zamówienia!");
             return;
         }
-
-        savedOrders.push([...order]);
+    
+        const orderNote = orderNoteInput?.value.trim() || ""; 
+    
+        const orderData = {
+            items: [...order],
+            note: orderNote,
+            timestamp: new Date().toLocaleString()
+        };
+    
+        savedOrders.push(orderData);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
-
+    
         const today = new Date().toISOString().split("T")[0];
         if (!historyOrders[today]) {
             historyOrders[today] = [];
         }
-
-        historyOrders[today].push([...order]);
+    
+        historyOrders[today].push(orderData);
         localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
-
+    
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
         updateSavedOrders();
+    
+        orderNoteInput.value = ""; // Wyczyść pole opisu
     });
-
-    window.showOrders = () => {
-        ordersSection.style.display = "block";  
-        updateSavedOrders();
-    };
-
-    const updateSavedOrders = () => {
-        savedOrdersContainer.innerHTML = "";
-    
-        let savedOrders = JSON.parse(localStorage.getItem("savedOrders"));
-        if (!Array.isArray(savedOrders)) savedOrders = [];  // Upewnij się, że jest tablicą
-    
-        if (savedOrders.length === 0) {
-            savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
-            return;
-        }
-    
-        savedOrders.forEach((order, index) => {
-            const orderCard = document.createElement("div");
-            orderCard.classList.add("order-card");
-    
-            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
-            let totalPrice = 0;
-    
-            // Sprawdzenie, czy zamówienie ma właściwą strukturę
-            const items = Array.isArray(order) ? order : order.items || [];
-    
-            items.forEach(item => {
-                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
-                totalPrice += item.price * item.quantity;
-            });
-    
-            orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
-    
-            // Dodanie notatki, jeśli istnieje
-            if (order.note) {
-                orderContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
-            }
-    
-            orderCard.innerHTML = orderContent;
-    
-            // Przycisk usuwania zamówienia
-            const removeButton = document.createElement("button");
-            removeButton.classList.add("remove-order-btn");
-            removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
-            removeButton.onclick = () => {
-                savedOrders.splice(index, 1);
-                localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
-                updateSavedOrders();
-            };
-    
-            orderCard.appendChild(removeButton);
-            savedOrdersContainer.appendChild(orderCard);
-        });
-    };
-    
-    if (burgerContainer) {
-        createItems(burgerContainer, menu.burgers);
-    } else if (friesContainer) {
-        createItems(friesContainer, menu.fries);
-    } else if (sidesContainer) {
-        createItems(sidesContainer, menu.sides);
-    }
 
     updateOrderSummary();
     updateSavedOrders();
