@@ -8,11 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
     const orderNoteInput = document.getElementById("order-note");
-    
+
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
     let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
-    
+
     const menu = {
         burgers: [
             { name: "Classic", price: 28 },
@@ -50,25 +50,42 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const showCustomizationOptions = (item) => {
+        document.querySelector(".custom-options")?.remove();
+
         const customOptions = document.createElement("div");
         customOptions.classList.add("custom-options");
+        customOptions.style.position = "fixed";
+        customOptions.style.top = "50%";
+        customOptions.style.left = "50%";
+        customOptions.style.transform = "translate(-50%, -50%)";
+        customOptions.style.background = "#fff";
+        customOptions.style.padding = "20px";
+        customOptions.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.2)";
+        customOptions.style.borderRadius = "8px";
+        customOptions.style.zIndex = "1000";
 
         let optionsHTML = `<h3>Wybierz składniki do usunięcia:</h3>`;
         ingredients.forEach(ingredient => {
             optionsHTML += `<label><input type="checkbox" value="${ingredient}"> ${ingredient}</label><br>`;
         });
-        optionsHTML += `<button onclick="addToOrderWithCustomization('${item.name}', ${item.price})">Dodaj do zamówienia</button>`;
+        optionsHTML += `
+            <button id="add-custom-order">Dodaj do zamówienia</button>
+            <button id="cancel-custom-order">Anuluj</button>
+        `;
 
         customOptions.innerHTML = optionsHTML;
         document.body.appendChild(customOptions);
+
+        document.getElementById("add-custom-order").onclick = () => addToOrderWithCustomization(item);
+        document.getElementById("cancel-custom-order").onclick = () => customOptions.remove();
     };
 
-    window.addToOrderWithCustomization = (name, price) => {
+    const addToOrderWithCustomization = (item) => {
         const selectedOptions = document.querySelectorAll(".custom-options input:checked");
         let removedIngredients = [];
         selectedOptions.forEach(option => removedIngredients.push(option.value));
 
-        order.push({ name, price, quantity: 1, removedIngredients });
+        order.push({ name: item.name, price: item.price, quantity: 1, removedIngredients });
         document.querySelector(".custom-options").remove();
         updateOrderSummary();
     };
@@ -79,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let totalPrice = 0;
 
         order.forEach((item, index) => {
-            let removedText = item.removedIngredients.length > 0 ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
+            let removedText = item.removedIngredients?.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
             const listItem = document.createElement("li");
             listItem.innerHTML = `${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN 
                 <button class="remove-btn" onclick="removeFromOrder(${index})">🗑</button>`;
@@ -91,14 +108,23 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
+    window.removeFromOrder = (index) => {
+        order.splice(index, 1);
+        updateOrderSummary();
+    };
+
     updateOrderSummary();
-    updateSavedOrders();
 
     if (burgerContainer) {
+        console.log("Generowanie burgerów...");
         createItems(burgerContainer, menu.burgers);
-    } else if (friesContainer) {
+    }
+    if (friesContainer) {
+        console.log("Generowanie frytek...");
         createItems(friesContainer, menu.fries);
-    } else if (sidesContainer) {
+    }
+    if (sidesContainer) {
+        console.log("Generowanie dodatków...");
         createItems(sidesContainer, menu.sides);
     }
 });
