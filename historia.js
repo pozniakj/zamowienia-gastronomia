@@ -16,12 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
                 let totalPrice = 0;
 
-                order.forEach(item => {
-                    orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                order.items.forEach(item => {
+                    let removedText = item.removedIngredients?.length ? ` (Bez: ${item.removedIngredients.join(", ")})` : "";
+                    orderContent += `<li>${item.name}${removedText} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                     totalPrice += item.price * item.quantity;
                 });
 
                 orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+
+                if (order.note) {
+                    orderContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
+                }
+
                 orderCard.innerHTML = orderContent;
 
                 // Przycisk usuwania zamówienia
@@ -42,4 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
             historyOrdersContainer.innerHTML = "<p>Brak zamówień tego dnia.</p>";
         }
     });
+
+    // Automatycznie załaduj dzisiejsze zamówienia
+    const today = new Date().toISOString().split("T")[0];
+    datePicker.value = today;
+    datePicker.dispatchEvent(new Event("change"));
 });
