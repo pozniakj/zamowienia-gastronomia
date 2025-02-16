@@ -8,17 +8,19 @@
 </head>
 <body>
     <h1>🍟 Frytki</h1>
-    <div id="fries-items" class="menu-container"></div>
+    
+    <div id="fries-items" class="menu-container"></div> <!-- Kontener na frytki -->
 
     <h2>Twoje zamówienie:</h2>
     <ul id="order-list"></ul>
     <p id="total-price">Łączna cena: 0 PLN</p>
-    <h3>Dodaj opis do zamówienia:</h3>
-    <textarea id="order-note" rows="3" placeholder="Np. bez cebuli, dodatkowy ketchup"></textarea>
+
+    <textarea id="order-note" placeholder="Np. dodatkowy ketchup"></textarea>
 
     <button id="save-order" class="menu-item">💾 Zapisz zamówienie</button>
-
     <a href="menu.html" class="menu-item">⬅ Powrót</a>
+
+    <div id="saved-orders-container"></div> <!-- NOWY ELEMENT -->
 
     <script src="app.js"></script>
 </body>
