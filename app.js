@@ -43,7 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const ingredients = ["Sałata", "Cebula", "Sos", "Ogórek"];
 
     const createItems = (container, items) => {
-        if (!container) return;
+        if (!container) {
+            console.error("Błąd: Kontener na produkty nie został znaleziony.");
+            return;
+        }
         container.innerHTML = "";
         items.forEach(item => {
             const button = document.createElement("button");
