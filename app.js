@@ -9,11 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidesContainer = document.getElementById("sides-items");
     const orderNoteInput = document.getElementById("order-note");
 
-    if (!burgerContainer && !friesContainer && !sidesContainer) {
-        console.error("Błąd: Nie znaleziono kontenerów produktów. Sprawdź HTML.");
-        return;
-    }
-
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
     let historyOrders = JSON.parse(localStorage.getItem("historyOrders")) || {};
@@ -61,7 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const addToOrder = (item, removedIngredients = []) => {
-        order.push({ ...item, quantity: 1, removedIngredients });
+        const existingItem = order.find(o => o.name === item.name && JSON.stringify(o.removedIngredients) === JSON.stringify(removedIngredients));
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            order.push({ ...item, quantity: 1, removedIngredients });
+        }
         updateOrderSummary();
     };
 
@@ -162,7 +162,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateSavedOrders();
 
-    if (burgerContainer) createItems(burgerContainer, menu.burgers);
-    if (friesContainer) createItems(friesContainer, menu.fries);
-    if (sidesContainer) createItems(sidesContainer, menu.sides);
+    if (burgerContainer) {
+        createItems(burgerContainer, menu.burgers);
+    }
+    if (friesContainer) {
+        createItems(friesContainer, menu.fries);
+    }
+    if (sidesContainer) {
+        createItems(sidesContainer, menu.sides);
+    }
 });
