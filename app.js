@@ -83,6 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.showOrders = () => {
         console.log("✅ Kliknięto 'Pokaż zapisane zamówienia'.");
+        if (!ordersSection) {
+            console.error("❌ Błąd: Nie znaleziono sekcji zamówień w HTML!");
+            return;
+        }
         ordersSection.style.display = "block";
         updateSavedOrders();
     };
