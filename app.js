@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Majonez", price: 0 }
         ],
         sides: [
-            { name: "Dodatkowy Składnik - 3 zł", price: 3 },
-            { name: "Dodatkowy Składnik - 4 zł", price: 4 },
+            { name: "Dodatkowy Składnik ", price: 3 },
+            { name: "Dodatkowy Składnik ", price: 4 },
             { name: "Opakowanie", price: 2 },
             { name: "Dodatkowy Sos", price: 2 },
             { name: "Coca Cola", price: 6 },
@@ -200,6 +200,11 @@ document.addEventListener("DOMContentLoaded", () => {
         printWindow.document.close();
         printWindow.print();
     };
+
+    if (burgerContainer) createItems(burgerContainer, menu.burgers);
+    if (friesContainer) createItems(friesContainer, menu.fries);
+    if (extrasContainer) createItems(extrasContainer, menu.extras);
+    if (sidesContainer) createItems(sidesContainer, menu.sides);
 
     updateOrderSummary();
     updateSavedOrders();
