@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Duże Frytki", price: 10 }
         ],
         extras: [
-            { name: "Ketchup", price: 1 },
-            { name: "Majonez", price: 1.5 }
+            { name: "Ketchup", price: 0 },
+            { name: "Majonez", price: 0 }
         ],
         sides: [
-            { name: "Dodatkowy Składnik - 3 zł", price: 3 },
-            { name: "Dodatkowy Składnik - 4 zł", price: 4 },
+            { name: "Dodatkowy Składnik ", price: 3 },
+            { name: "Dodatkowy Składnik ", price: 4 },
             { name: "Opakowanie", price: 2 },
             { name: "Dodatkowy Sos", price: 2 },
             { name: "Coca Cola", price: 6 },
