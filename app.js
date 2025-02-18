@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
-    const extrasContainer = document.getElementById("extras-items"); // Nowa sekcja na ketchup i majonez
+    const extrasContainer = document.getElementById("extras-items"); // Kontener na sosy
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -22,17 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Truffla", price: 30 },
             { name: "Piekielny", price: 32 },
             { name: "KimCheese", price: 32 },
-            { name: "Bydlak", price: 35 },
-            { name: "Dodatkowe mięso", price: 12 }
+            { name: "Bydlak", price: 35 }
         ],
         fries: [
-            { name: "Małe", price: 7 },
-            { name: "Duże", price: 10 }
-        ],
-        sides: [
-            { name: "Dodatkowe Mięso", price: 12 },
-            { name: "Składnik 2zł", price: 2 },
-            { name: "Składnik 4zł", price: 4 }
+            { name: "Małe Frytki", price: 7 },
+            { name: "Duże Frytki", price: 10 }
         ],
         extras: [
             { name: "Ketchup", price: 1 },
@@ -170,11 +164,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (burgerContainer) {
         createItems(burgerContainer, menu.burgers);
-    } else if (friesContainer) {
+    } 
+    if (friesContainer) {
         createItems(friesContainer, menu.fries);
-    } else if (sidesContainer) {
-        createItems(sidesContainer, menu.sides);
-    } else if (extrasContainer) { 
+    }
+    if (extrasContainer) { 
         createItems(extrasContainer, menu.extras); 
     }
 
