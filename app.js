@@ -96,30 +96,24 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+
         const orderNote = document.getElementById("order-note")?.value.trim() || ""; 
 
         const orderData = {
             items: [...order],
-            note: orderNote
+            note: orderNote,
+            orderTime: formattedTime
         };
 
         savedOrders.push(orderData);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
-        const today = new Date().toISOString().split("T")[0];
-        if (!historyOrders[today]) {
-            historyOrders[today] = [];
-        }
-
-        historyOrders[today].push(orderData);
-        localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
-
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
         updateSavedOrders();
-
-        document.getElementById("order-note").value = "";
     });
 
     window.showOrders = () => {
@@ -142,12 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
 
-            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
+            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><p>⏰ Czas zamówienia: ${order.orderTime}</p><ul>`;
             let totalPrice = 0;
 
-            const items = Array.isArray(order) ? order : order.items || [];
-
-            items.forEach(item => {
+            order.items.forEach(item => {
                 orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
@@ -162,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
-            removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
+            removeButton.innerHTML = "🗑 Usuń";
             removeButton.onclick = () => {
                 savedOrders.splice(index, 1);
                 localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
@@ -181,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const printOrder = (order, index) => {
-        let printContent = `<h1>🧾 Zamówienie #${index + 1}</h1><ul>`;
+        let printContent = `<h1>🧾 Zamówienie #${index + 1}</h1><p>⏰ Czas zamówienia: ${order.orderTime}</p><ul>`;
         let totalPrice = 0;
 
         order.items.forEach(item => {
@@ -191,20 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         printContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
 
-        if (order.note) {
-            printContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
-        }
-
         const printWindow = window.open("", "", "width=600,height=600");
         printWindow.document.write(`<html><head><title>Drukowanie Zamówienia</title></head><body>${printContent}</body></html>`);
         printWindow.document.close();
         printWindow.print();
     };
-
-    if (burgerContainer) createItems(burgerContainer, menu.burgers);
-    if (friesContainer) createItems(friesContainer, menu.fries);
-    if (extrasContainer) createItems(extrasContainer, menu.extras);
-    if (sidesContainer) createItems(sidesContainer, menu.sides);
 
     updateOrderSummary();
     updateSavedOrders();
