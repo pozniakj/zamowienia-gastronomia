@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Truffla", price: 30 },
             { name: "Piekielny", price: 32 },
             { name: "KimCheese", price: 32 },
-            { name: "Bydlak", price: 35 }
+            { name: "Bydlak", price: 35 },
+            { name: "Dodatkowe mięso", price: 12 }
+
         ],
         fries: [
             { name: "Małe", price: 7 },
