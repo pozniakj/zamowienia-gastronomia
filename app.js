@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveOrderButton = document.getElementById("save-order");
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
-    const sidesContainer = document.getElementById("sides-items");
+    const sidesContainer = document.getElementById("sides-items"); // Kontener na dodatki
     const extrasContainer = document.getElementById("extras-items"); // Kontener na sosy
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
@@ -31,6 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
         extras: [
             { name: "Ketchup", price: 1 },
             { name: "Majonez", price: 1.5 }
+        ],
+        sides: [
+            { name: "Dodatkowy Składnik - 3 zł", price: 3 },
+            { name: "Dodatkowy Składnik - 4 zł", price: 4 },
+            { name: "Opakowanie", price: 2 },
+            { name: "Dodatkowy Sos", price: 2 },
+            { name: "Coca Cola", price: 6 },
+            { name: "Coca Cola Zero", price: 6 },
+            { name: "Piwo Zero", price: 9 },
+            { name: "On-Lemon", price: 9 },
+            { name: "Dostawa", price: 9 },
+            { name: "Pyszne", price: 4 }
         ]
     };
 
@@ -83,30 +95,30 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Nie można zapisać pustego zamówienia!");
             return;
         }
-    
+
         const orderNote = document.getElementById("order-note")?.value.trim() || ""; 
-    
+
         const orderData = {
             items: [...order],
             note: orderNote
         };
-    
+
         savedOrders.push(orderData);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
-    
+
         const today = new Date().toISOString().split("T")[0];
         if (!historyOrders[today]) {
             historyOrders[today] = [];
         }
-    
+
         historyOrders[today].push(orderData);
         localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
-    
+
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
         updateSavedOrders();
-    
+
         document.getElementById("order-note").value = ""; // Wyczyść pole opisu
     });
 
@@ -117,37 +129,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const updateSavedOrders = () => {
         savedOrdersContainer.innerHTML = "";
-    
+
         let savedOrders = JSON.parse(localStorage.getItem("savedOrders"));
         if (!Array.isArray(savedOrders)) savedOrders = [];  
-    
+
         if (savedOrders.length === 0) {
             savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
             return;
         }
-    
+
         savedOrders.forEach((order, index) => {
             const orderCard = document.createElement("div");
             orderCard.classList.add("order-card");
-    
+
             let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
             let totalPrice = 0;
-    
+
             const items = Array.isArray(order) ? order : order.items || [];
-    
+
             items.forEach(item => {
                 orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
                 totalPrice += item.price * item.quantity;
             });
-    
+
             orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
-    
+
             if (order.note) {
                 orderContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
             }
-    
+
             orderCard.innerHTML = orderContent;
-    
+
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
             removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
@@ -156,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
                 updateSavedOrders();
             };
-    
+
             orderCard.appendChild(removeButton);
             savedOrdersContainer.appendChild(orderCard);
         });
@@ -170,6 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (extrasContainer) { 
         createItems(extrasContainer, menu.extras); 
+    }
+    if (sidesContainer) { 
+        createItems(sidesContainer, menu.sides); 
     }
 
     updateOrderSummary();
