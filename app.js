@@ -189,6 +189,11 @@ document.addEventListener("DOMContentLoaded", () => {
         printWindow.print();
     };
 
+    if (burgerContainer) createItems(burgerContainer, menu.burgers);
+    if (friesContainer) createItems(friesContainer, menu.fries);
+    if (extrasContainer) createItems(extrasContainer, menu.extras);
+    if (sidesContainer) createItems(sidesContainer, menu.sides);
+
     updateOrderSummary();
     updateSavedOrders();
 });
