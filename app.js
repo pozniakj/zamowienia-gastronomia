@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
     const extrasContainer = document.getElementById("extras-items");
-    const orderTimeSelect = document.getElementById("order-time");
-    const customTimeInput = document.getElementById("custom-time");
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -92,27 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("currentOrder", JSON.stringify(order));
     };
 
-    orderTimeSelect?.addEventListener("change", function() {
-        if (this.value === "custom") {
-            customTimeInput.style.display = "block";
-        } else {
-            customTimeInput.style.display = "none";
-            customTimeInput.value = "";
-        }
-    });
-
     saveOrderButton?.addEventListener("click", () => {
         if (order.length === 0) {
             alert("Nie można zapisać pustego zamówienia!");
-            return;
-        }
-
-        let selectedTime = orderTimeSelect?.value;
-        let customTime = customTimeInput?.value;
-        let finalTime = selectedTime === "custom" ? customTime : selectedTime;
-
-        if (selectedTime === "custom" && (!customTime || isNaN(customTime) || customTime <= 0)) {
-            alert("Proszę wpisać poprawny czas zamówienia.");
             return;
         }
 
@@ -120,18 +100,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const orderData = {
             items: [...order],
-            note: orderNote,
-            orderTime: finalTime ? `${finalTime} minut` : null
+            note: orderNote
         };
 
         savedOrders.push(orderData);
         localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
 
+        const today = new Date().toISOString().split("T")[0];
+        if (!historyOrders[today]) {
+            historyOrders[today] = [];
+        }
+
+        historyOrders[today].push(orderData);
+        localStorage.setItem("historyOrders", JSON.stringify(historyOrders));
+
         order = [];
         localStorage.setItem("currentOrder", JSON.stringify(order));
         updateOrderSummary();
         updateSavedOrders();
+
+        document.getElementById("order-note").value = "";
     });
+
+    window.showOrders = () => {
+        ordersSection.style.display = "block";  
+        updateSavedOrders();
+    };
+
+    const updateSavedOrders = () => {
+        savedOrdersContainer.innerHTML = "";
+
+        let savedOrders = JSON.parse(localStorage.getItem("savedOrders"));
+        if (!Array.isArray(savedOrders)) savedOrders = [];  
+
+        if (savedOrders.length === 0) {
+            savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
+            return;
+        }
+
+        savedOrders.forEach((order, index) => {
+            const orderCard = document.createElement("div");
+            orderCard.classList.add("order-card");
+
+            let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
+            let totalPrice = 0;
+
+            const items = Array.isArray(order) ? order : order.items || [];
+
+            items.forEach(item => {
+                orderContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+                totalPrice += item.price * item.quantity;
+            });
+
+            orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+
+            if (order.note) {
+                orderContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
+            }
+
+            orderCard.innerHTML = orderContent;
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-order-btn");
+            removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
+            removeButton.onclick = () => {
+                savedOrders.splice(index, 1);
+                localStorage.setItem("savedOrders", JSON.stringify(savedOrders));
+                updateSavedOrders();
+            };
+
+            const printButton = document.createElement("button");
+            printButton.classList.add("menu-item");
+            printButton.innerHTML = "🖨 Drukuj Zamówienie";
+            printButton.onclick = () => printOrder(order, index);
+
+            orderCard.appendChild(removeButton);
+            orderCard.appendChild(printButton);
+            savedOrdersContainer.appendChild(orderCard);
+        });
+    };
 
     const printOrder = (order, index) => {
         let printContent = `<h1>🧾 Zamówienie #${index + 1}</h1><ul>`;
@@ -146,10 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (order.note) {
             printContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
-        }
-
-        if (order.orderTime) {
-            printContent += `<p style="margin-top: 10px;"><strong>⏰ Czas realizacji:</strong> ${order.orderTime}</p>`;
         }
 
         const printWindow = window.open("", "", "width=600,height=600");
