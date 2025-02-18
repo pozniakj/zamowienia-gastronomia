@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveOrderButton = document.getElementById("save-order");
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
-    const sidesContainer = document.getElementById("sides-items"); // Kontener na dodatki
-    const extrasContainer = document.getElementById("extras-items"); // Kontener na sosy
+    const sidesContainer = document.getElementById("sides-items");
+    const extrasContainer = document.getElementById("extras-items");
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Majonez", price: 0 }
         ],
         sides: [
-            { name: "Dodatkowy Składnik ", price: 3 },
-            { name: "Dodatkowy Składnik ", price: 4 },
+            { name: "Dodatkowy Składnik - 3 zł", price: 3 },
+            { name: "Dodatkowy Składnik - 4 zł", price: 4 },
             { name: "Opakowanie", price: 2 },
             { name: "Dodatkowy Sos", price: 2 },
             { name: "Coca Cola", price: 6 },
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateOrderSummary();
         updateSavedOrders();
 
-        document.getElementById("order-note").value = ""; // Wyczyść pole opisu
+        document.getElementById("order-note").value = "";
     });
 
     window.showOrders = () => {
@@ -169,23 +169,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateSavedOrders();
             };
 
+            const printButton = document.createElement("button");
+            printButton.classList.add("menu-item");
+            printButton.innerHTML = "🖨 Drukuj Zamówienie";
+            printButton.onclick = () => printOrder(order, index);
+
             orderCard.appendChild(removeButton);
+            orderCard.appendChild(printButton);
             savedOrdersContainer.appendChild(orderCard);
         });
     };
 
-    if (burgerContainer) {
-        createItems(burgerContainer, menu.burgers);
-    } 
-    if (friesContainer) {
-        createItems(friesContainer, menu.fries);
-    }
-    if (extrasContainer) { 
-        createItems(extrasContainer, menu.extras); 
-    }
-    if (sidesContainer) { 
-        createItems(sidesContainer, menu.sides); 
-    }
+    const printOrder = (order, index) => {
+        let printContent = `<h1>🧾 Zamówienie #${index + 1}</h1><ul>`;
+        let totalPrice = 0;
+
+        order.items.forEach(item => {
+            printContent += `<li>${item.name} x${item.quantity} - ${item.price * item.quantity} PLN</li>`;
+            totalPrice += item.price * item.quantity;
+        });
+
+        printContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
+
+        if (order.note) {
+            printContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
+        }
+
+        const printWindow = window.open("", "", "width=600,height=600");
+        printWindow.document.write(`<html><head><title>Drukowanie Zamówienia</title></head><body>${printContent}</body></html>`);
+        printWindow.document.close();
+        printWindow.print();
+    };
 
     updateOrderSummary();
     updateSavedOrders();
