@@ -34,16 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Składnik 2zł", price: 2 },
             { name: "Składnik 4zł", price: 4 }
         ],
-        extras: [
-            { name: "Ketchup", price: 1 },
-            { name: "Majonez", price: 1.5 }
-        ]
+        
     };
-    const extrasContainer = document.getElementById("extras-items");
-
-    if (extrasContainer) {
-        createItems(extrasContainer, menu.extras);
-    }
 
     const createItems = (container, items) => {
         if (!container) return;
