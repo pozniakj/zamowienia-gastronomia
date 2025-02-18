@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const burgerContainer = document.getElementById("burger-items");
     const friesContainer = document.getElementById("fries-items");
     const sidesContainer = document.getElementById("sides-items");
+    const extrasContainer = document.getElementById("extras-items"); // Nowa sekcja na ketchup i majonez
 
     let order = JSON.parse(localStorage.getItem("currentOrder")) || [];
     let savedOrders = JSON.parse(localStorage.getItem("savedOrders")) || [];
@@ -23,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "KimCheese", price: 32 },
             { name: "Bydlak", price: 35 },
             { name: "Dodatkowe mięso", price: 12 }
-
         ],
         fries: [
             { name: "Małe", price: 7 },
@@ -34,7 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Składnik 2zł", price: 2 },
             { name: "Składnik 4zł", price: 4 }
         ],
-        
+        extras: [
+            { name: "Ketchup", price: 1 },
+            { name: "Majonez", price: 1.5 }
+        ]
     };
 
     const createItems = (container, items) => {
@@ -112,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
         document.getElementById("order-note").value = ""; // Wyczyść pole opisu
     });
-    
 
     window.showOrders = () => {
         ordersSection.style.display = "block";  
@@ -123,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         savedOrdersContainer.innerHTML = "";
     
         let savedOrders = JSON.parse(localStorage.getItem("savedOrders"));
-        if (!Array.isArray(savedOrders)) savedOrders = [];  // Upewnij się, że jest tablicą
+        if (!Array.isArray(savedOrders)) savedOrders = [];  
     
         if (savedOrders.length === 0) {
             savedOrdersContainer.innerHTML = "<p>Brak zapisanych zamówień.</p>";
@@ -137,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let orderContent = `<h3>📝 Zamówienie #${index + 1}</h3><ul>`;
             let totalPrice = 0;
     
-            // Sprawdzenie, czy zamówienie ma właściwą strukturę
             const items = Array.isArray(order) ? order : order.items || [];
     
             items.forEach(item => {
@@ -147,14 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
             orderContent += `</ul><p><strong>Łączna cena:</strong> ${totalPrice} PLN</p>`;
     
-            // Dodanie notatki, jeśli istnieje
             if (order.note) {
                 orderContent += `<p><strong>Notatka:</strong> ${order.note}</p>`;
             }
     
             orderCard.innerHTML = orderContent;
     
-            // Przycisk usuwania zamówienia
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-order-btn");
             removeButton.innerHTML = '<i class="fas fa-trash"></i> Usuń';
@@ -168,16 +167,17 @@ document.addEventListener("DOMContentLoaded", () => {
             savedOrdersContainer.appendChild(orderCard);
         });
     };
-    
+
     if (burgerContainer) {
         createItems(burgerContainer, menu.burgers);
     } else if (friesContainer) {
         createItems(friesContainer, menu.fries);
     } else if (sidesContainer) {
         createItems(sidesContainer, menu.sides);
+    } else if (extrasContainer) { 
+        createItems(extrasContainer, menu.extras); 
     }
 
     updateOrderSummary();
     updateSavedOrders();
-    
 });
